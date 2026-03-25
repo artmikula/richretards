@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rich Retards — Scam Alerts &amp; Financial Fails</title>
+    <link>https://richretards.com</link>
+    <description>The internet's most honest finance community. Scam alerts, financial fails, and brutally honest money lessons delivered weekly.</description>
+    <language>en-us</language>
+    <atom:link href="https://richretards.com/rss.xml" rel="self" type="application/rss+xml"/>
+    <lastBuildDate>Mon, 24 Mar 2026 00:00:00 GMT</lastBuildDate>
+    <item>
+      <title>"Guaranteed 500% Returns" Discord Group Takes $2M From Members</title>
+      <link>https://richretards.com/#scam-discord</link>
+      <description>Shocking twist: the guy with a rented Lambo in his profile pic was NOT a legitimate financial advisor.</description>
+      <category>Scam Alert</category>
+      <pubDate>Mon, 24 Mar 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>New Crypto Token "SafeMoonRocket" Rugs Within 4 Hours of Launch</title>
+      <link>https://richretards.com/#scam-rugpull</link>
+      <description>Developers disappeared with $800K. Investors say they never saw it coming despite the word Safe being in the name.</description>
+      <category>Scam Alert</category>
+      <pubDate>Mon, 24 Mar 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Instagram Forex Mentor Exposed: His Profits Were Photoshopped</title>
+      <link>https://richretards.com/#scam-forex</link>
+      <description>The Dubai lifestyle was actually a green screen in a studio apartment in New Jersey.</description>
+      <category>Scam Alert</category>
+      <pubDate>Mon, 24 Mar 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>The 5 Contract Clauses That Rob You Blind (And How to Spot Them)</title>
+      <link>https://richretards.com/#contract-clauses</link>
+      <description>Auto-renewal, mandatory arbitration, liquidated damages... your landlord is counting on you NOT reading page 12.</description>
+      <category>Financial Wisdom</category>
+      <pubDate>Mon, 24 Mar 2026 00:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>
