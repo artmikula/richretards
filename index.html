@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>💰 RICH RETARDS 💰 - The #1 Finance Site On The ENTIRE Internet!!!</title>
+  <meta name="description" content="Rich Retards - Meme finance, bad money decisions, scam alerts, and unhinged financial wisdom. The internet's most honest finance community." />
+  <meta name="keywords" content="meme finance, bad financial decisions, money memes, scam alerts, rich retards, financial fails, wallstreetbets, degen finance, crypto memes" />
+  <link rel="canonical" href="https://richretards.com/" />
+  <meta property="og:title" content="💰 RICH RETARDS 💰 - Meme Finance Empire" />
+  <meta property="og:description" content="The internet's most unhinged finance community. Bad decisions. Good laughs. Real lessons." />
+  <meta property="og:type" content="website" />
+
+  <style>
+    /* GEOCITIES ENERGY */
+    @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Press+Start+2P&family=Bangers&family=VT323&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Comic Neue', 'Comic Sans MS', cursive;
+      background: #000;
+      color: #00ff00;
+      cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><text y="28" font-size="28">💰</text></svg>') 0 0, auto;
+      overflow-x: hidden;
+    }
+
+    /* THE MOST OBNOXIOUS BACKGROUND */
+    .bg-chaos {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background:
+        repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,0,0,0.03) 10px, rgba(255,0,0,0.03) 20px),
+        repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(0,255,0,0.03) 10px, rgba(0,255,0,0.03) 20px);
+      animation: bgShift 3s linear infinite;
+    }
+    @keyframes bgShift {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
+
+    .content { position: relative; z-index: 1; }
+
+    /* MARQUEE MADNESS */
+    .top-ticker {
+      background: linear-gradient(90deg, #ff0000, #ff6600, #ffff00, #00ff00, #0066ff, #9900ff, #ff0000);
+      background-size: 400% 100%;
+      animation: rainbowBg 3s linear infinite;
+      padding: 8px 0;
+      overflow: hidden;
+      border-bottom: 3px solid #ffff00;
+      font-family: 'VT323', monospace;
+      font-size: 1.3rem;
+      color: #000;
+      font-weight: bold;
+    }
+    @keyframes rainbowBg {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 400% 50%; }
+    }
+    .ticker-scroll {
+      display: inline-block;
+      white-space: nowrap;
+      animation: scroll 20s linear infinite;
+    }
+    @keyframes scroll {
+      0% { transform: translateX(100vw); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* HEADER FROM HELL */
+    .header {
+      background: linear-gradient(180deg, #1a0033, #000066, #003300);
+      border-bottom: 5px dashed #ff00ff;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+    }
+    .header h1 {
+      font-family: 'Bangers', cursive;
+      font-size: clamp(3rem, 10vw, 8rem);
+      color: #ffff00;
+      text-shadow:
+        3px 3px 0 #ff0000,
+        -3px -3px 0 #00ff00,
+        6px 6px 0 #ff00ff,
+        0 0 40px #ffff00,
+        0 0 80px #ff6600;
+      letter-spacing: 4px;
+      animation: headerPulse 0.5s ease-in-out infinite alternate;
+      line-height: 1;
+    }
+    @keyframes headerPulse {
+      0% { transform: scale(1); text-shadow: 3px 3px 0 #ff0000, -3px -3px 0 #00ff00, 0 0 40px #ffff00; }
+      100% { transform: scale(1.02); text-shadow: 3px 3px 0 #ff0000, -3px -3px 0 #00ff00, 0 0 80px #ff6600, 0 0 120px #ff0000; }
+    }
+    .header .subtitle {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(0.5rem, 2vw, 0.9rem);
+      color: #00ffff;
+      margin-top: 10px;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    .visitor-counter {
+      font-family: 'VT323', monospace;
+      font-size: 1.2rem;
+      color: #ff00ff;
+      margin-top: 12px;
+      background: #000;
+      display: inline-block;
+      padding: 4px 16px;
+      border: 2px inset #808080;
+    }
+
+    /* FAKE AD BANNERS */
+    .ad-banner {
+      background: linear-gradient(90deg, #ff0000, #ff6600);
+      border: 3px solid #ffff00;
+      padding: 12px 20px;
+      text-align: center;
+      font-family: 'Bangers', cursive;
+      font-size: 1.3rem;
+      color: #fff;
+      text-shadow: 2px 2px 0 #000;
+      animation: adFlash 0.8s ease-in-out infinite alternate;
+      margin: 8px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .ad-banner::after {
+      content: '>>> CLICK HERE <<<';
+      display: block;
+      font-size: 0.9rem;
+      color: #ffff00;
+      animation: blink 0.5s step-end infinite;
+    }
+    @keyframes adFlash {
+      0% { background: linear-gradient(90deg, #ff0000, #ff6600); }
+      100% { background: linear-gradient(90deg, #ff6600, #ff0000); box-shadow: 0 0 30px #ff0000; }
+    }
+
+    .ad-banner-blue {
+      background: linear-gradient(90deg, #0000ff, #0099ff) !important;
+      border-color: #00ffff !important;
+    }
+    .ad-banner-green {
+      background: linear-gradient(90deg, #006600, #00cc00) !important;
+      border-color: #00ff00 !important;
+    }
+    .ad-banner-purple {
+      background: linear-gradient(90deg, #660099, #cc00ff) !important;
+      border-color: #ff00ff !important;
+    }
+
+    /* MAIN LAYOUT - TABLE-BASED LIKE GOD INTENDED */
+    .main-table {
+      display: grid;
+      grid-template-columns: 200px 1fr 200px;
+      gap: 0;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      background: linear-gradient(180deg, #000033, #000);
+      border-right: 3px ridge #00ff00;
+      padding: 10px;
+    }
+    .sidebar-right {
+      border-right: none;
+      border-left: 3px ridge #ff00ff;
+    }
+    .sidebar h3 {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.6rem;
+      color: #ff00ff;
+      text-align: center;
+      padding: 8px 0;
+      border-bottom: 2px dashed #333;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+    .sidebar-link {
+      display: block;
+      padding: 6px 8px;
+      color: #00ff00;
+      text-decoration: none;
+      font-size: 0.85rem;
+      border-bottom: 1px dotted #003300;
+      transition: all 0.1s;
+    }
+    .sidebar-link:hover {
+      background: #003300;
+      color: #ffff00;
+      text-decoration: underline;
+    }
+    .sidebar-link::before { content: '▶ '; color: #ff0000; }
+
+    .mini-ad {
+      background: #1a0000;
+      border: 2px solid #ff0000;
+      padding: 10px;
+      margin: 10px 0;
+      text-align: center;
+      font-size: 0.75rem;
+      color: #ff6600;
+      animation: adFlash 1.5s ease-in-out infinite alternate;
+    }
+    .mini-ad .big { font-size: 1.5rem; display: block; font-weight: bold; color: #ffff00; }
+
+    /* MAIN CONTENT */
+    .main-content {
+      background: #0a0a0a;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    /* SECTION HEADERS */
+    .section-header {
+      background: linear-gradient(90deg, #ff0000, #cc0000);
+      color: #ffff00;
+      font-family: 'Bangers', cursive;
+      font-size: 1.8rem;
+      padding: 10px 16px;
+      margin: 20px 0 16px;
+      border-left: 6px solid #ffff00;
+      text-shadow: 2px 2px 0 #000;
+      letter-spacing: 2px;
+    }
+    .section-header.blue { background: linear-gradient(90deg, #0000cc, #0066ff); }
+    .section-header.green { background: linear-gradient(90deg, #006600, #00cc00); color: #000; }
+    .section-header.purple { background: linear-gradient(90deg, #660066, #cc00cc); }
+
+    /* CONTENT CARDS */
+    .post-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .post-card {
+      background: #111;
+      border: 2px solid;
+      padding: 16px;
+      transition: all 0.2s;
+      position: relative;
+    }
+    .post-card:nth-child(1) { border-color: #ff0000; }
+    .post-card:nth-child(2) { border-color: #00ff00; }
+    .post-card:nth-child(3) { border-color: #ffff00; }
+    .post-card:nth-child(4) { border-color: #ff00ff; }
+    .post-card:nth-child(5) { border-color: #00ffff; }
+    .post-card:nth-child(6) { border-color: #ff6600; }
+    .post-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 20px currentColor;
+    }
+    .post-card .tag {
+      display: inline-block;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.5rem;
+      padding: 3px 8px;
+      margin-bottom: 8px;
+      color: #000;
+    }
+    .tag-scam { background: #ff0000; }
+    .tag-fail { background: #ff6600; }
+    .tag-lesson { background: #00ff00; }
+    .tag-degen { background: #ff00ff; color: #fff; }
+    .tag-news { background: #00ffff; }
+    .tag-wisdom { background: #ffff00; }
+
+    .post-card h3 {
+      font-family: 'Bangers', cursive;
+      font-size: 1.3rem;
+      color: #fff;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+    .post-card p {
+      font-size: 0.9rem;
+      color: #999;
+      line-height: 1.5;
+    }
+    .post-card .read-more {
+      display: inline-block;
+      margin-top: 10px;
+      color: #00ff00;
+      font-weight: bold;
+      font-size: 0.85rem;
+      text-decoration: none;
+      animation: blink 2s step-end infinite;
+    }
+
+    /* NEWSLETTER SECTION */
+    .newsletter-box {
+      background: linear-gradient(135deg, #1a0033, #330000, #003300);
+      border: 4px double #ffff00;
+      padding: 30px;
+      text-align: center;
+      margin: 30px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .newsletter-box::before {
+      content: '💰💰💰💰💰💰💰💰💰💰💰💰💰💰💰💰💰💰💰💰';
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-size: 1.5rem;
+      opacity: 0.1;
+      white-space: nowrap;
+      animation: scroll 15s linear infinite;
+    }
+    .newsletter-box h2 {
+      font-family: 'Bangers', cursive;
+      font-size: 2.5rem;
+      color: #ffff00;
+      text-shadow: 3px 3px 0 #ff0000;
+      margin-bottom: 8px;
+    }
+    .newsletter-box .urgency {
+      color: #ff0000;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.7rem;
+      animation: blink 0.5s step-end infinite;
+      margin-bottom: 16px;
+    }
+    .newsletter-box p {
+      color: #ccc;
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+    .email-form {
+      display: flex;
+      gap: 0;
+      max-width: 500px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .email-form input[type="email"] {
+      flex: 1;
+      min-width: 200px;
+      padding: 14px;
+      background: #000;
+      color: #00ff00;
+      border: 3px solid #00ff00;
+      font-family: 'VT323', monospace;
+      font-size: 1.2rem;
+      outline: none;
+    }
+    .email-form input[type="email"]::placeholder { color: #006600; }
+    .email-form input[type="email"]:focus { border-color: #ffff00; box-shadow: 0 0 20px #00ff00; }
+    .email-form button {
+      padding: 14px 24px;
+      background: linear-gradient(180deg, #ff0000, #cc0000);
+      color: #ffff00;
+      border: 3px solid #ffff00;
+      font-family: 'Bangers', cursive;
+      font-size: 1.3rem;
+      cursor: pointer;
+      letter-spacing: 2px;
+      transition: all 0.2s;
+    }
+    .email-form button:hover {
+      background: linear-gradient(180deg, #ff3300, #ff0000);
+      box-shadow: 0 0 30px #ff0000;
+      transform: scale(1.05);
+    }
+
+    /* STATS TICKER */
+    .stats-bar {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      background: #0a0a0a;
+      border: 2px solid #333;
+      padding: 16px;
+      margin: 20px 0;
+      gap: 10px;
+    }
+    .stat-item {
+      text-align: center;
+    }
+    .stat-item .num {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 1.5rem;
+      color: #00ff00;
+      text-shadow: 0 0 10px #00ff00;
+      display: block;
+    }
+    .stat-item .label {
+      font-size: 0.7rem;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* GIF SEPARATOR */
+    .separator {
+      text-align: center;
+      padding: 10px 0;
+      font-size: 1.5rem;
+      letter-spacing: 10px;
+      color: #ff0000;
+      text-shadow: 0 0 10px #ff0000;
+    }
+
+    /* UNDER CONSTRUCTION */
+    .construction {
+      text-align: center;
+      padding: 20px;
+      margin: 20px 0;
+      border: 3px dashed #ffff00;
+      background: repeating-linear-gradient(45deg, #000, #000 10px, #1a1a00 10px, #1a1a00 20px);
+    }
+    .construction span {
+      font-size: 3rem;
+    }
+    .construction p {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.7rem;
+      color: #ffff00;
+      margin-top: 8px;
+      animation: blink 1s step-end infinite;
+    }
+
+    /* BOTTOM TICKER */
+    .bottom-bar {
+      background: #000;
+      border-top: 3px solid #ff0000;
+      padding: 16px;
+      text-align: center;
+    }
+    .bottom-bar .links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .bottom-bar a {
+      color: #00ff00;
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+    .bottom-bar a:hover { color: #ffff00; text-decoration: underline; }
+    .bottom-bar .copy {
+      font-family: 'VT323', monospace;
+      font-size: 1rem;
+      color: #333;
+    }
+    .bottom-bar .copy span { color: #ff0000; }
+
+    /* WEBRING */
+    .webring {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      background: #111;
+      border: 2px inset #808080;
+      padding: 6px 12px;
+      margin-top: 10px;
+      font-size: 0.8rem;
+    }
+    .webring a { color: #00ffff; }
+
+    /* FLOATING EMOJIS */
+    .floater {
+      position: fixed;
+      font-size: 2rem;
+      opacity: 0.3;
+      pointer-events: none;
+      z-index: 0;
+      animation: floatUp 8s linear infinite;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0.3; }
+      50% { opacity: 0.6; }
+      100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* RESPONSIVE - STACK SIDEBARS */
+    @media (max-width: 900px) {
+      .main-table {
+        grid-template-columns: 1fr;
+      }
+      .sidebar { display: none; }
+      .header h1 { font-size: 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-chaos"></div>
+
+<!-- FLOATING MONEY -->
+<div class="floater" style="left:5%;animation-delay:0s;">💵</div>
+<div class="floater" style="left:15%;animation-delay:1.5s;">🤑</div>
+<div class="floater" style="left:30%;animation-delay:3s;">💰</div>
+<div class="floater" style="left:50%;animation-delay:0.5s;">📉</div>
+<div class="floater" style="left:65%;animation-delay:2s;">🚀</div>
+<div class="floater" style="left:80%;animation-delay:4s;">💎</div>
+<div class="floater" style="left:90%;animation-delay:1s;">🦍</div>
+<div class="floater" style="left:40%;animation-delay:5s;">🔥</div>
+<div class="floater" style="left:70%;animation-delay:3.5s;">💸</div>
+<div class="floater" style="left:20%;animation-delay:6s;">🧠</div>
+
+<div class="content">
+
+  <!-- TOP TICKER -->
+  <div class="top-ticker">
+    <div class="ticker-scroll">
+      🚨 BREAKING: Man invests life savings in coin named after a dog — is shocked when it goes to zero 🚨 | 💰 ALERT: "Trust me bro" is NOT financial advice 💰 | 📉 LOCAL GENIUS discovers "buy high sell low" strategy | 🔥 SUBSCRIBE TO OUR NEWSLETTER — YOUR WALLET DEPENDS ON IT 🔥 | 🦍 APE INDEX: Strong | 💎 Diamond Hands Rating: Questionable | 🚀 Moon Status: Still waiting |
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>💰 RICH RETARDS 💰</h1>
+    <div class="subtitle">>>> THE INTERNET'S #1 UNHINGED FINANCE COMMUNITY <<<</div>
+    <div class="visitor-counter">
+      👁️ You are visitor #<span id="visitorCount">1,337,420</span> | 🟢 <span id="onlineCount">69</span> degenerates online now
+    </div>
+  </div>
+
+  <!-- AD BANNER 1 -->
+  <div class="ad-banner">
+    🚀🚀🚀 TIRED OF BEING POOR? SUBSCRIBE TO OUR FREE NEWSLETTER AND BECOME A RICH RETARD TODAY!!! 🚀🚀🚀
+  </div>
+
+  <!-- MAIN LAYOUT -->
+  <div class="main-table">
+
+    <!-- LEFT SIDEBAR -->
+    <div class="sidebar">
+      <h3>🔥 Navigation</h3>
+      <a href="#" class="sidebar-link">🏠 Home</a>
+      <a href="#" class="sidebar-link">💀 Scam Alerts</a>
+      <a href="#" class="sidebar-link">📉 Financial Fails</a>
+      <a href="#" class="sidebar-link">🧠 Actual Wisdom</a>
+      <a href="#" class="sidebar-link">🦍 Degen Corner</a>
+      <a href="#" class="sidebar-link">💰 Newsletter</a>
+      <a href="#" class="sidebar-link">🎰 Merch Store</a>
+
+      <div class="mini-ad">
+        <span class="big">FREE</span>
+        WEEKLY NEWSLETTER<br/>
+        Don't be the last retard to know!<br/>
+        <span style="color:#00ff00;font-weight:bold;">SUBSCRIBE NOW!!!</span>
+      </div>
+
+      <h3>📊 Market Mood</h3>
+      <div style="text-align:center;padding:10px;">
+        <div style="font-size:3rem;">😱</div>
+        <div style="color:#ff0000;font-family:'Press Start 2P',monospace;font-size:0.5rem;margin-top:4px;">EXTREME GREED</div>
+        <div style="color:#666;font-size:0.7rem;margin-top:4px;">(time to sell, retard)</div>
+      </div>
+
+      <div class="mini-ad" style="border-color:#00ff00;">
+        <span class="big" style="color:#00ff00;">69%</span>
+        of our readers<br/>
+        made money*<br/>
+        <span style="font-size:0.5rem;color:#333;">*not financial advice</span>
+      </div>
+
+      <h3>🏆 Hall of Fame</h3>
+      <a href="#" class="sidebar-link">Pizza Bitcoin Guy</a>
+      <a href="#" class="sidebar-link">LUNA Millionaire</a>
+      <a href="#" class="sidebar-link">NFT Ape Buyer</a>
+      <a href="#" class="sidebar-link">Margin Call Mike</a>
+      <a href="#" class="sidebar-link">Paper Hands Pete</a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+
+      <!-- STATS BAR -->
+      <div class="stats-bar">
+        <div class="stat-item">
+          <span class="num" id="lostCounter">$4.2B</span>
+          <span class="label">Lost to scams this year</span>
+        </div>
+        <div class="stat-item">
+          <span class="num" style="color:#ff0000;">69,420</span>
+          <span class="label">Bad decisions documented</span>
+        </div>
+        <div class="stat-item">
+          <span class="num" style="color:#ffff00;">$0</span>
+          <span class="label">Financial advice given</span>
+        </div>
+        <div class="stat-item">
+          <span class="num" style="color:#ff00ff;">∞</span>
+          <span class="label">Retards helped</span>
+        </div>
+      </div>
+
+      <!-- AD -->
+      <div class="ad-banner ad-banner-blue">
+        💎🙌 BECOME A DIAMOND-HANDED SUBSCRIBER — OUR NEWSLETTER HAS A 420% OPEN RATE* 💎🙌
+        <div style="font-size:0.5rem;color:#aaa;margin-top:4px;">*statistic made up for entertainment purposes</div>
+      </div>
+
+      <!-- SCAM ALERTS -->
+      <div class="section-header">🚨 LATEST SCAM ALERTS 🚨</div>
+      <div class="post-grid">
+        <div class="post-card">
+          <span class="tag tag-scam">⚠️ SCAM</span>
+          <h3>"Guaranteed 500% Returns" Discord Group Takes $2M From Members</h3>
+          <p>Shocking twist: the guy with a rented Lambo in his profile pic was NOT a legitimate financial advisor.</p>
+          <a href="#" class="read-more">>>> READ MORE <<<</a>
+        </div>
+        <div class="post-card">
+          <span class="tag tag-scam">⚠️ SCAM</span>
+          <h3>New Crypto Token "SafeMoonRocket" Rugs Within 4 Hours of Launch</h3>
+          <p>Developers disappeared with $800K. Investors say "we never saw it coming" despite the word "Safe" being in the name.</p>
+          <a href="#" class="read-more">>>> READ MORE <<<</a>
+        </div>
+        <div class="post-card">
+          <span class="tag tag-scam">⚠️ SCAM</span>
+          <h3>Instagram "Forex Mentor" Exposed: His Profits Were Photoshopped</h3>
+          <p>Plot twist: the Dubai lifestyle was actually a green screen in a studio apartment in New Jersey.</p>
+          <a href="#" class="read-more">>>> READ MORE <<<</a>
+        </div>
+      </div>
+
+      <div class="separator">💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀</div>
+
+      <!-- FINANCIAL FAILS -->
+      <div class="section-header blue">📉 HALL OF SHAME — WORST FINANCIAL DECISIONS 📉</div>
+      <div class="post-grid">
+        <div class="post-card">
+          <span class="tag tag-fail">📉 FAIL</span>
+          <h3>Man Takes Out $50K Loan to Buy NFT of a Rock. Rock Now Worth $12.</h3>
+          <p>He says he's "still early" and "the technology will catch up." The loan payments will not wait.</p>
+          <a href="#" class="read-more">>>> READ MORE <<<</a>
+        </div>
+        <div class="post-card">
+          <span class="tag tag-fail">📉 FAIL</span>
+          <h3>Reddit User YOLOs Entire 401K Into Meme Stock. Posts Loss Porn.</h3>
+          <p>"At least I have internet points," he commented from his parents' basement. He's 34.</p>
+          <a href="#" class="read-more">>>> READ MORE <<<</a>
+        </div>
+        <div class="post-card">
+          <span class="tag tag-degen">🦍 DEGEN</span>
+          <h3>"I Signed a Lease Without Reading It" — The $8,400 Surprise Fee</h3>
+          <p>Hidden in page 14: a "community enhancement fee" of $700/month. Our app Fineprint would've caught this in 10 seconds.</p>
+          <a href="#" class="read-more">>>> READ MORE <<<</a>
+        </div>
+      </div>
+
+      <!-- AD -->
+      <div class="ad-banner ad-banner-green">
+        🧠 STOP SIGNING CONTRACTS YOU DON'T READ — TRY FINEPRINT: AI SCANS YOUR LEASE IN 10 SECONDS 🧠
+      </div>
+
+      <!-- NEWSLETTER SIGNUP -->
+      <div class="newsletter-box">
+        <h2>🚨 JOIN 10,000+ RICH RETARDS 🚨</h2>
+        <div class="urgency">⚡ FREE FOREVER — DON'T BE THE LAST TO KNOW ⚡</div>
+        <p>Every week: the dumbest financial decisions on the internet, scam breakdowns, and actual lessons so you don't end up on our Hall of Shame.</p>
+        <div class="email-form">
+          <input type="email" placeholder="your@email.com (we won't sell it... probably)" id="emailInput" />
+          <button type="button" onclick="fakeSubscribe()">SUBSCRIBE!!!</button>
+        </div>
+        <p id="subMessage" style="margin-top:12px;display:none;"></p>
+        <div style="margin-top:12px;font-size:0.7rem;color:#666;">
+          📧 Weekly • 🚫 No spam • 🧠 Actually useful • 💰 100% free
+        </div>
+      </div>
+
+      <!-- WISDOM -->
+      <div class="section-header green">🧠 ACTUAL WISDOM (SERIOUSLY) 🧠</div>
+      <div class="post-grid">
+        <div class="post-card">
+          <span class="tag tag-wisdom">🧠 WISDOM</span>
+          <h3>The 5 Contract Clauses That Rob You Blind (And How to Spot Them)</h3>
+          <p>Auto-renewal, mandatory arbitration, liquidated damages... your landlord is counting on you NOT reading page 12.</p>
+          <a href="#" class="read-more">>>> READ MORE <<<</a>
+        </div>
+        <div class="post-card">
+          <span class="tag tag-lesson">📚 LESSON</span>
+          <h3>Why "Everyone Signs This" Is the Most Expensive Lie You'll Believe</h3>
+          <p>Pressure tactics 101: they want you to sign fast because slow readers cost them money.</p>
+          <a href="#" class="read-more">>>> READ MORE <<<</a>
+        </div>
+        <div class="post-card">
+          <span class="tag tag-news">📰 NEWS</span>
+          <h3>FTC Reports Record $10B Lost to Fraud in 2025 — Here's the #1 Scam</h3>
+          <p>Investment scams topped the list again. The common thread? "Guaranteed returns." Nothing is guaranteed, retard.</p>
+          <a href="#" class="read-more">>>> READ MORE <<<</a>
+        </div>
+      </div>
+
+      <div class="separator">🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥</div>
+
+      <!-- AD -->
+      <div class="ad-banner ad-banner-purple">
+        🎰 RICH RETARDS MERCH COMING SOON — HATS, HOODIES, STICKERS — LOOK STUPID IN STYLE 🎰
+      </div>
+
+      <!-- UNDER CONSTRUCTION -->
+      <div class="construction">
+        <span>🚧👷🚧👷🚧</span>
+        <p>MORE CONTENT COMING SOON — WE'RE BUILDING THIS THING</p>
+        <span>🚧👷🚧👷🚧</span>
+      </div>
+
+      <!-- SOCIAL LINKS -->
+      <div style="text-align:center;margin:30px 0;">
+        <div class="section-header purple" style="display:inline-block;margin:0;">📱 FOLLOW US EVERYWHERE 📱</div>
+        <div style="margin-top:16px;display:flex;justify-content:center;gap:16px;flex-wrap:wrap;">
+          <a href="#" style="background:#ff0050;color:#fff;padding:10px 20px;text-decoration:none;font-family:'Bangers',cursive;font-size:1.1rem;border:2px solid #fff;">TikTok</a>
+          <a href="#" style="background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;padding:10px 20px;text-decoration:none;font-family:'Bangers',cursive;font-size:1.1rem;border:2px solid #fff;">Instagram</a>
+          <a href="#" style="background:#ff0000;color:#fff;padding:10px 20px;text-decoration:none;font-family:'Bangers',cursive;font-size:1.1rem;border:2px solid #fff;">YouTube</a>
+          <a href="#" style="background:#000;color:#fff;padding:10px 20px;text-decoration:none;font-family:'Bangers',cursive;font-size:1.1rem;border:2px solid #fff;">𝕏 / Twitter</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT SIDEBAR -->
+    <div class="sidebar sidebar-right">
+      <h3>📈 Trending</h3>
+      <a href="#" class="sidebar-link">🔥 Crypto bro loses house</a>
+      <a href="#" class="sidebar-link">🔥 Lease scam exposed</a>
+      <a href="#" class="sidebar-link">🔥 MLM mom bankruptcy</a>
+      <a href="#" class="sidebar-link">🔥 NFT market collapse</a>
+      <a href="#" class="sidebar-link">🔥 Forex guru arrested</a>
+
+      <div class="mini-ad" style="border-color:#ffff00;">
+        <span class="big" style="color:#ff0000;">FREE</span>
+        AI CONTRACT<br/>SCANNER<br/>
+        <a href="https://fineprintapp.com" target="_blank" style="color:#00ff00;font-weight:bold;font-size:0.9rem;">GET FINEPRINT →</a>
+      </div>
+
+      <h3>💀 Latest Losses</h3>
+      <div style="padding:8px;font-family:'VT323',monospace;font-size:0.9rem;">
+        <div style="color:#ff0000;border-bottom:1px dotted #333;padding:4px 0;">-$42,069 <span style="color:#666">meme coin</span></div>
+        <div style="color:#ff0000;border-bottom:1px dotted #333;padding:4px 0;">-$8,400 <span style="color:#666">hidden lease fee</span></div>
+        <div style="color:#ff0000;border-bottom:1px dotted #333;padding:4px 0;">-$15,000 <span style="color:#666">forex "course"</span></div>
+        <div style="color:#ff0000;border-bottom:1px dotted #333;padding:4px 0;">-$2,200 <span style="color:#666">payday loan</span></div>
+        <div style="color:#00ff00;border-bottom:1px dotted #333;padding:4px 0;">+$0.03 <span style="color:#666">savings account</span></div>
+      </div>
+
+      <div class="mini-ad" style="border-color:#ff00ff;background:#0d000d;">
+        ⚠️ DON'T MISS<br/>
+        <span class="big" style="color:#ff00ff;">THE</span>
+        <span class="big" style="color:#ff00ff;">NEWS</span>
+        <br/>LETTER<br/>
+        <span style="color:#ffff00;font-weight:bold;">↓ SCROLL DOWN ↓</span>
+      </div>
+
+      <h3>🎲 Retard Quiz</h3>
+      <div style="padding:8px;font-size:0.8rem;color:#ccc;">
+        <p>Can YOU spot the scam?</p>
+        <div style="margin-top:8px;background:#111;border:1px solid #333;padding:8px;font-size:0.75rem;">
+          "Invest $500, get $5000 back in 7 days. Guaranteed!"
+          <div style="margin-top:6px;">
+            <span style="background:#ff0000;color:#fff;padding:2px 8px;font-size:0.6rem;cursor:pointer;">🚩 SCAM</span>
+            <span style="background:#00ff00;color:#000;padding:2px 8px;font-size:0.6rem;cursor:pointer;margin-left:4px;">✅ LEGIT</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mini-ad" style="border-color:#00ffff;background:#000d0d;">
+        <div style="font-size:0.6rem;color:#00ffff;">SPONSORED</div>
+        <span class="big" style="color:#00ffff;">READ</span>
+        YOUR CONTRACT<br/>
+        BEFORE SIGNING<br/>
+        <span style="font-size:0.6rem;color:#666;">— brought to you by common sense</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM AD -->
+  <div class="ad-banner">
+    ⚠️⚠️⚠️ THIS IS NOT FINANCIAL ADVICE. WE ARE LITERALLY CALLED "RICH RETARDS." PLEASE DO YOUR OWN RESEARCH. ⚠️⚠️⚠️
+  </div>
+
+  <!-- FOOTER -->
+  <div class="bottom-bar">
+    <div class="links">
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Newsletter</a>
+      <a href="#">Scam Alerts</a>
+      <a href="#">Contact</a>
+      <a href="#">Privacy Policy</a>
+      <a href="https://centipede.dev" target="_blank">Built by Centipede Software</a>
+    </div>
+    <div class="webring">
+      ← <a href="#">Prev</a> | 🌐 Rich Retards Webring | <a href="#">Next</a> →
+    </div>
+    <div class="copy" style="margin-top:10px;">
+      © 2026 <span>RICH RETARDS</span> — All rights reserved. None of this is financial advice. We can barely manage our own money.
+    </div>
+    <div style="margin-top:8px;font-family:'VT323',monospace;font-size:0.9rem;color:#333;">
+      Best viewed in Netscape Navigator 4.0 at 800x600 resolution 🖥️
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Fake visitor counter
+  function randomBetween(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  // Update online count periodically
+  setInterval(() => {
+    document.getElementById('onlineCount').textContent = randomBetween(42, 420);
+  }, 3000);
+
+  // Fake subscriber
+  function fakeSubscribe() {
+    const email = document.getElementById('emailInput').value;
+    const msg = document.getElementById('subMessage');
+    if (email && email.includes('@')) {
+      msg.style.display = 'block';
+      msg.style.color = '#00ff00';
+      msg.innerHTML = '✅ WELCOME TO THE RETARD ARMY! Check your inbox (or spam, we end up there sometimes).';
+      document.getElementById('emailInput').value = '';
+    } else {
+      msg.style.display = 'block';
+      msg.style.color = '#ff0000';
+      msg.innerHTML = '❌ That\'s not an email address, retard. Try again.';
+    }
+  }
+
+  // Increment visitor counter randomly
+  let count = 1337420;
+  setInterval(() => {
+    count += randomBetween(1, 5);
+    document.getElementById('visitorCount').textContent = count.toLocaleString();
+  }, 2000);
+
+  // Enter key for email
+  document.getElementById('emailInput').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') fakeSubscribe();
+  });
+</script>
+
+</body>
+</html>
