@@ -6,34 +6,70 @@
     <description>The internet's most honest finance community. Scam alerts, financial fails, and brutally honest money lessons delivered weekly.</description>
     <language>en-us</language>
     <atom:link href="https://richretards.com/rss.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Mon, 24 Mar 2026 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 26 Mar 2026 00:00:00 GMT</lastBuildDate>
+
     <item>
       <title>"Guaranteed 500% Returns" Discord Group Takes $2M From Members</title>
-      <link>https://richretards.com/#scam-discord</link>
-      <description>Shocking twist: the guy with a rented Lambo in his profile pic was NOT a legitimate financial advisor.</description>
+      <link>https://richretards.com/scams/discord-guaranteed-returns/</link>
+      <description>A Discord group promising guaranteed 500% returns scammed members out of $2 million. Here's how the scam worked and the red flags everyone missed.</description>
       <category>Scam Alert</category>
-      <pubDate>Mon, 24 Mar 2026 00:00:00 GMT</pubDate>
+      <pubDate>Thu, 26 Mar 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
       <title>New Crypto Token "SafeMoonRocket" Rugs Within 4 Hours of Launch</title>
-      <link>https://richretards.com/#scam-rugpull</link>
-      <description>Developers disappeared with $800K. Investors say they never saw it coming despite the word Safe being in the name.</description>
+      <link>https://richretards.com/scams/safemoonrocket-rugpull/</link>
+      <description>Developers disappeared with $800K. Investors said they never saw it coming despite the word Safe being in the name.</description>
       <category>Scam Alert</category>
-      <pubDate>Mon, 24 Mar 2026 00:00:00 GMT</pubDate>
+      <pubDate>Thu, 26 Mar 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
-      <title>Instagram Forex Mentor Exposed: His Profits Were Photoshopped</title>
-      <link>https://richretards.com/#scam-forex</link>
+      <title>Instagram "Forex Mentor" Exposed: His Profits Were Photoshopped</title>
+      <link>https://richretards.com/scams/instagram-forex-mentor/</link>
       <description>The Dubai lifestyle was actually a green screen in a studio apartment in New Jersey.</description>
       <category>Scam Alert</category>
-      <pubDate>Mon, 24 Mar 2026 00:00:00 GMT</pubDate>
+      <pubDate>Thu, 26 Mar 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Man Takes Out $50K Loan to Buy NFT of a Rock. Rock Now Worth $12.</title>
+      <link>https://richretards.com/fails/nft-rock-loan/</link>
+      <description>He says he's still early and the technology will catch up. The loan payments will not wait.</description>
+      <category>Financial Fail</category>
+      <pubDate>Thu, 26 Mar 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Reddit User YOLOs Entire 401K Into Meme Stock. Posts Loss Porn.</title>
+      <link>https://richretards.com/fails/401k-meme-stock/</link>
+      <description>At least I have internet points, he commented from his parents' basement. He's 34.</description>
+      <category>Financial Fail</category>
+      <pubDate>Thu, 26 Mar 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>"I Signed a Lease Without Reading It" — The $8,400 Surprise Fee</title>
+      <link>https://richretards.com/fails/lease-surprise-fee/</link>
+      <description>Hidden in page 14: a community enhancement fee of $700/month. An AI contract scanner would have caught this in seconds.</description>
+      <category>Financial Fail</category>
+      <pubDate>Thu, 26 Mar 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
       <title>The 5 Contract Clauses That Rob You Blind (And How to Spot Them)</title>
-      <link>https://richretards.com/#contract-clauses</link>
-      <description>Auto-renewal, mandatory arbitration, liquidated damages... your landlord is counting on you NOT reading page 12.</description>
-      <category>Financial Wisdom</category>
-      <pubDate>Mon, 24 Mar 2026 00:00:00 GMT</pubDate>
+      <link>https://richretards.com/wisdom/5-contract-clauses/</link>
+      <description>Auto-renewal, mandatory arbitration, liquidated damages, non-competes, and liability waivers explained in plain English.</description>
+      <category>Wisdom</category>
+      <pubDate>Thu, 26 Mar 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Why "Everyone Signs This" Is the Most Expensive Lie You'll Believe</title>
+      <link>https://richretards.com/wisdom/everyone-signs-this/</link>
+      <description>Pressure tactics in contract signing and why businesses want you to sign fast.</description>
+      <category>Wisdom</category>
+      <pubDate>Thu, 26 Mar 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>FTC Reports Record $10B Lost to Fraud in 2025 — Here's the #1 Scam</title>
+      <link>https://richretards.com/wisdom/ftc-fraud-report/</link>
+      <description>Investment scams topped the list again. The full breakdown of the biggest fraud categories and how to protect yourself.</description>
+      <category>Wisdom</category>
+      <pubDate>Thu, 26 Mar 2026 00:00:00 GMT</pubDate>
     </item>
   </channel>
 </rss>

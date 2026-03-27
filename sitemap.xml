@@ -1,33 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://richretards.com/</loc>
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://richretards.com/#scam-alerts</loc>
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://richretards.com/#financial-fails</loc>
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://richretards.com/#wisdom</loc>
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://richretards.com/merch/</loc>
-    <lastmod>2026-03-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
+  <url><loc>https://richretards.com/</loc><lastmod>2026-03-26</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>
+  <url><loc>https://richretards.com/about/</loc><lastmod>2026-03-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://richretards.com/newsletter/</loc><lastmod>2026-03-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://richretards.com/contact/</loc><lastmod>2026-03-26</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://richretards.com/privacy/</loc><lastmod>2026-03-26</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://richretards.com/merch/</loc><lastmod>2026-03-26</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <!-- Scam Alerts -->
+  <url><loc>https://richretards.com/scams/discord-guaranteed-returns/</loc><lastmod>2026-03-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://richretards.com/scams/safemoonrocket-rugpull/</loc><lastmod>2026-03-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://richretards.com/scams/instagram-forex-mentor/</loc><lastmod>2026-03-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <!-- Financial Fails -->
+  <url><loc>https://richretards.com/fails/nft-rock-loan/</loc><lastmod>2026-03-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://richretards.com/fails/401k-meme-stock/</loc><lastmod>2026-03-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://richretards.com/fails/lease-surprise-fee/</loc><lastmod>2026-03-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <!-- Wisdom -->
+  <url><loc>https://richretards.com/wisdom/5-contract-clauses/</loc><lastmod>2026-03-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://richretards.com/wisdom/everyone-signs-this/</loc><lastmod>2026-03-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://richretards.com/wisdom/ftc-fraud-report/</loc><lastmod>2026-03-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
 </urlset>
