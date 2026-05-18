@@ -888,11 +888,19 @@
         <h2>🚨 JOIN 10,000+ RICH RETARDS 🚨</h2>
         <div class="urgency">⚡ FREE FOREVER — DON'T BE THE LAST TO KNOW ⚡</div>
         <p>Every week: the dumbest financial decisions on the internet, scam breakdowns, and actual lessons so you don't end up on our Hall of Shame.</p>
-        <div class="email-form">
-          <input type="email" placeholder="your@email.com (we won't sell it... probably)" id="emailInput" />
-          <button type="button" onclick="fakeSubscribe()">SUBSCRIBE!!!</button>
-        </div>
-        <p id="subMessage" style="margin-top:12px;display:none;"></p>
+        <form
+          action="https://buttondown.email/api/emails/embed-subscribe/richrscom"
+          method="post"
+          target="popupwindow"
+          onsubmit="window.open('https://buttondown.email/richrscom', 'popupwindow')"
+          class="email-form"
+        >
+          <input type="email" name="email" placeholder="your@email.com (we won't sell it... probably)" required />
+          <button type="submit">SUBSCRIBE!!!</button>
+        </form>
+        <p style="margin-top:12px;font-size:0.75rem;color:#666;">
+          📬 Double opt-in via Buttondown. Check your inbox to confirm.
+        </p>
         <div style="margin-top:12px;font-size:0.7rem;color:#666;">
           📧 Weekly • 🚫 No spam • 🧠 Actually useful • 💰 100% free
         </div>
@@ -1123,33 +1131,12 @@
     document.getElementById('onlineCount').textContent = randomBetween(42, 420);
   }, 3000);
 
-  // Fake subscriber
-  function fakeSubscribe() {
-    const email = document.getElementById('emailInput').value;
-    const msg = document.getElementById('subMessage');
-    if (email && email.includes('@')) {
-      msg.style.display = 'block';
-      msg.style.color = '#00ff00';
-      msg.innerHTML = '✅ WELCOME TO THE RETARD ARMY! Check your inbox (or spam, we end up there sometimes).';
-      document.getElementById('emailInput').value = '';
-    } else {
-      msg.style.display = 'block';
-      msg.style.color = '#ff0000';
-      msg.innerHTML = '❌ That\'s not an email address, retard. Try again.';
-    }
-  }
-
   // Increment visitor counter randomly
   let count = 1337420;
   setInterval(() => {
     count += randomBetween(1, 5);
     document.getElementById('visitorCount').textContent = count.toLocaleString();
   }, 2000);
-
-  // Enter key for email
-  document.getElementById('emailInput').addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') fakeSubscribe();
-  });
 </script>
 
 </body>
