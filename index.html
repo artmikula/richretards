@@ -631,6 +631,100 @@
       .sidebar { display: none; }
       .header h1 { font-size: 3rem; }
     }
+
+    /* === RR TERMINAL (sober) === */
+    .terminal {
+      background: #0a0a0a;
+      border-top: 1px solid #222;
+      border-bottom: 1px solid #222;
+      font-family: 'VT323', 'Courier New', monospace;
+      color: #e0e0e0;
+      padding: 12px 16px 16px;
+      margin: 0;
+      position: relative;
+      z-index: 2;
+    }
+    .terminal-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: #888;
+      border-bottom: 1px solid #1a1a1a;
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+    .terminal-title { color: #ffb000; font-weight: bold; }
+    .terminal-status { color: #00d084; }
+    .terminal-clock { color: #666; }
+
+    .terminal-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .t-panel {
+      background: #0d0d0d;
+      border: 1px solid #1f1f1f;
+      padding: 8px 10px 6px;
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+    }
+    .t-panel-wide { grid-column: span 2; }
+    .t-panel-head {
+      color: #ffb000;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      border-bottom: 1px solid #1a1a1a;
+      padding-bottom: 4px;
+      margin-bottom: 6px;
+    }
+    .t-panel-body {
+      flex: 1;
+      font-size: 1rem;
+      line-height: 1.35;
+      color: #e0e0e0;
+      overflow: hidden;
+    }
+    .t-panel-foot {
+      font-size: 0.7rem;
+      color: #555;
+      margin-top: 4px;
+      letter-spacing: 1px;
+    }
+
+    .t-row { display: flex; justify-content: space-between; padding: 1px 0; }
+    .t-row .sym { color: #ccc; }
+    .t-pos { color: #00d084; }
+    .t-neg { color: #ff3b3b; }
+    .t-muted { color: #666; }
+    .t-err { color: #ff3b3b; }
+
+    .t-newsitem {
+      display: block;
+      font-size: 0.85rem;
+      color: #ccc;
+      text-decoration: none;
+      padding: 2px 0;
+      border-bottom: 1px dotted #1a1a1a;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .t-newsitem:hover { color: #ffb000; }
+    .t-newsitem .src { color: #555; margin-right: 6px; }
+    .t-newsitem .when { color: #444; margin-left: 6px; font-size: 0.7rem; }
+
+    @media (max-width: 1024px) {
+      .terminal-grid { grid-template-columns: repeat(2, 1fr); }
+      .t-panel-wide { grid-column: span 2; }
+    }
+    @media (max-width: 600px) {
+      .terminal-grid { grid-template-columns: 1fr; }
+      .t-panel-wide { grid-column: span 1; }
+    }
   </style>
 </head>
 <body>
@@ -667,6 +761,55 @@
       👁️ You are visitor #<span id="visitorCount">1,337,420</span> | 🟢 <span id="onlineCount">69</span> degenerates online now
     </div>
   </header>
+
+  <!-- TERMINAL (sober finance dashboard) -->
+  <section class="terminal" id="terminal">
+    <div class="terminal-bar">
+      <span class="terminal-title">▓ RR TERMINAL</span>
+      <span class="terminal-status" id="terminalStatus">● LIVE</span>
+      <span class="terminal-clock" id="terminalClock">--:--:-- UTC</span>
+    </div>
+
+    <div class="terminal-grid">
+
+      <div class="t-panel" id="panel-crypto">
+        <div class="t-panel-head">▓ CRYPTO</div>
+        <div class="t-panel-body" id="crypto-body">-- LOADING --</div>
+        <div class="t-panel-foot" id="crypto-foot">updated --:--:--</div>
+      </div>
+
+      <div class="t-panel" id="panel-stocks">
+        <div class="t-panel-head">▓ STOCKS / INDICES</div>
+        <div class="t-panel-body" id="stocks-body">-- LOADING --</div>
+        <div class="t-panel-foot" id="stocks-foot">updated --:--:--</div>
+      </div>
+
+      <div class="t-panel" id="panel-fg">
+        <div class="t-panel-head">▓ FEAR &amp; GREED</div>
+        <div class="t-panel-body" id="fg-body">-- LOADING --</div>
+        <div class="t-panel-foot" id="fg-foot">updated --:--:--</div>
+      </div>
+
+      <div class="t-panel" id="panel-gas">
+        <div class="t-panel-head">▓ ETH GAS</div>
+        <div class="t-panel-body" id="gas-body">-- LOADING --</div>
+        <div class="t-panel-foot" id="gas-foot">updated --:--:--</div>
+      </div>
+
+      <div class="t-panel t-panel-wide" id="panel-news">
+        <div class="t-panel-head">▓ NEWS</div>
+        <div class="t-panel-body" id="news-body">-- LOADING --</div>
+        <div class="t-panel-foot" id="news-foot">updated --:--:--</div>
+      </div>
+
+      <div class="t-panel t-panel-wide" id="panel-rekt">
+        <div class="t-panel-head">▓ RUG PULLS &amp; HACKS</div>
+        <div class="t-panel-body" id="rekt-body">-- LOADING --</div>
+        <div class="t-panel-foot" id="rekt-foot">updated --:--:--</div>
+      </div>
+
+    </div>
+  </section>
 
   <!-- AD BANNER 1 — STAKE -->
   <a href="https://stake.us/?c=IhtHsG9P" target="_blank" rel="noopener" class="ad-banner" style="display:block;text-decoration:none;color:#fff;background:linear-gradient(90deg,#00d4aa,#0088aa);">
@@ -888,11 +1031,19 @@
         <h2>🚨 JOIN 10,000+ RICH RETARDS 🚨</h2>
         <div class="urgency">⚡ FREE FOREVER — DON'T BE THE LAST TO KNOW ⚡</div>
         <p>Every week: the dumbest financial decisions on the internet, scam breakdowns, and actual lessons so you don't end up on our Hall of Shame.</p>
-        <div class="email-form">
-          <input type="email" placeholder="your@email.com (we won't sell it... probably)" id="emailInput" />
-          <button type="button" onclick="fakeSubscribe()">SUBSCRIBE!!!</button>
-        </div>
-        <p id="subMessage" style="margin-top:12px;display:none;"></p>
+        <form
+          action="https://buttondown.email/api/emails/embed-subscribe/richrscom"
+          method="post"
+          target="popupwindow"
+          onsubmit="window.open('https://buttondown.email/richrscom', 'popupwindow')"
+          class="email-form"
+        >
+          <input type="email" name="email" placeholder="your@email.com (we won't sell it... probably)" required />
+          <button type="submit">SUBSCRIBE!!!</button>
+        </form>
+        <p style="margin-top:12px;font-size:0.75rem;color:#666;">
+          📬 Double opt-in via Buttondown. Check your inbox to confirm.
+        </p>
         <div style="margin-top:12px;font-size:0.7rem;color:#666;">
           📧 Weekly • 🚫 No spam • 🧠 Actually useful • 💰 100% free
         </div>
@@ -1123,34 +1274,15 @@
     document.getElementById('onlineCount').textContent = randomBetween(42, 420);
   }, 3000);
 
-  // Fake subscriber
-  function fakeSubscribe() {
-    const email = document.getElementById('emailInput').value;
-    const msg = document.getElementById('subMessage');
-    if (email && email.includes('@')) {
-      msg.style.display = 'block';
-      msg.style.color = '#00ff00';
-      msg.innerHTML = '✅ WELCOME TO THE RETARD ARMY! Check your inbox (or spam, we end up there sometimes).';
-      document.getElementById('emailInput').value = '';
-    } else {
-      msg.style.display = 'block';
-      msg.style.color = '#ff0000';
-      msg.innerHTML = '❌ That\'s not an email address, retard. Try again.';
-    }
-  }
-
   // Increment visitor counter randomly
   let count = 1337420;
   setInterval(() => {
     count += randomBetween(1, 5);
     document.getElementById('visitorCount').textContent = count.toLocaleString();
   }, 2000);
-
-  // Enter key for email
-  document.getElementById('emailInput').addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') fakeSubscribe();
-  });
 </script>
+
+<script defer src="/terminal.js"></script>
 
 </body>
 </html>
