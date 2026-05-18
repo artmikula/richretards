@@ -62,6 +62,41 @@ async function renderCrypto() {
   }
 }
 
+// --- Widget: Stocks / Indices (Yahoo Finance v8 chart endpoint, CORS-friendly) ---
+async function renderStocks() {
+  const symbols = ['SPY', 'QQQ', 'NVDA', 'TSLA', 'GME', 'AMC'];
+  const fetchOne = async (sym) => {
+    const url = `https://query1.finance.yahoo.com/v8/finance/chart/${sym}?interval=1d&range=2d`;
+    const data = await fetchJSON(url);
+    const r = data && data.chart && data.chart.result && data.chart.result[0];
+    if (!r) throw new Error('no result');
+    const meta = r.meta;
+    const price = meta.regularMarketPrice;
+    const prev = meta.chartPreviousClose ?? meta.previousClose ?? price;
+    const chg = prev ? ((price - prev) / prev) * 100 : 0;
+    return { sym, price, chg };
+  };
+
+  try {
+    const results = await Promise.allSettled(symbols.map(fetchOne));
+    const rows = results.map((res, i) => {
+      const sym = symbols[i];
+      if (res.status !== 'fulfilled') {
+        return `<div class="t-row"><span class="sym">${sym}</span><span class="t-muted">--</span></div>`;
+      }
+      const { price, chg } = res.value;
+      return `<div class="t-row">
+        <span class="sym">${sym}</span>
+        <span>$${fmtNum(price, 2)} <span class="${pctClass(chg)}">${pctStr(chg)}</span></span>
+      </div>`;
+    }).join('');
+    document.getElementById('stocks-body').innerHTML = rows;
+    setFoot('stocks-foot', true);
+  } catch (e) {
+    setError('stocks-body', 'stocks-foot');
+  }
+}
+
 // --- Clock ---
 function renderClock() {
   const el = document.getElementById('terminalClock');
@@ -75,6 +110,9 @@ function init() {
 
   renderCrypto();
   setInterval(renderCrypto, 30_000);
+
+  renderStocks();
+  setInterval(renderStocks, 30_000);
 }
 
 if (document.readyState === 'loading') {
