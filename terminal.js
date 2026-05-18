@@ -127,6 +127,24 @@ async function renderFG() {
   }
 }
 
+// --- Widget: ETH Gas (Etherscan gas oracle) ---
+async function renderGas() {
+  try {
+    const data = await fetchJSON('https://api.etherscan.io/api?module=gastracker&action=gasoracle');
+    if (!data || data.status !== '1' || !data.result) throw new Error('bad response');
+    const { SafeGasPrice, ProposeGasPrice, FastGasPrice } = data.result;
+    document.getElementById('gas-body').innerHTML = `
+      <div class="t-row"><span class="sym">SLOW</span><span>${SafeGasPrice} gwei</span></div>
+      <div class="t-row"><span class="sym">AVG</span><span>${ProposeGasPrice} gwei</span></div>
+      <div class="t-row"><span class="sym">FAST</span><span>${FastGasPrice} gwei</span></div>
+      <div style="margin-top:6px;color:#555;font-size:0.7rem;">mainnet · etherscan</div>
+    `;
+    setFoot('gas-foot', true);
+  } catch (e) {
+    setError('gas-body', 'gas-foot');
+  }
+}
+
 // --- Clock ---
 function renderClock() {
   const el = document.getElementById('terminalClock');
@@ -146,6 +164,9 @@ function init() {
 
   renderFG();
   setInterval(renderFG, 5 * 60_000); // 5 minutes
+
+  renderGas();
+  setInterval(renderGas, 60_000); // 1 minute
 }
 
 if (document.readyState === 'loading') {
