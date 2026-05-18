@@ -97,6 +97,36 @@ async function renderStocks() {
   }
 }
 
+// --- Widget: Fear & Greed (alternative.me — crypto index) ---
+async function renderFG() {
+  try {
+    const data = await fetchJSON('https://api.alternative.me/fng/?limit=1');
+    const item = data && data.data && data.data[0];
+    if (!item) throw new Error('no data');
+    const v = parseInt(item.value, 10);
+    const label = item.value_classification.toUpperCase();
+    const colorMap = {
+      'EXTREME FEAR': '#ff3b3b',
+      'FEAR': '#ff8a00',
+      'NEUTRAL': '#cccccc',
+      'GREED': '#9ad929',
+      'EXTREME GREED': '#00d084',
+    };
+    const color = colorMap[label] || '#cccccc';
+    const blocks = Math.round(v / 10); // 0..10 filled
+    const bar = '█'.repeat(blocks) + '░'.repeat(10 - blocks);
+    document.getElementById('fg-body').innerHTML = `
+      <div style="text-align:center;font-size:2rem;color:${color};line-height:1.1;">${v}</div>
+      <div style="text-align:center;color:${color};letter-spacing:1px;font-size:0.85rem;">${label}</div>
+      <div style="text-align:center;color:${color};margin-top:6px;font-family:monospace;">${bar}</div>
+      <div style="text-align:center;color:#555;font-size:0.7rem;margin-top:4px;">crypto · alternative.me</div>
+    `;
+    setFoot('fg-foot', true);
+  } catch (e) {
+    setError('fg-body', 'fg-foot');
+  }
+}
+
 // --- Clock ---
 function renderClock() {
   const el = document.getElementById('terminalClock');
@@ -113,6 +143,9 @@ function init() {
 
   renderStocks();
   setInterval(renderStocks, 30_000);
+
+  renderFG();
+  setInterval(renderFG, 5 * 60_000); // 5 minutes
 }
 
 if (document.readyState === 'loading') {
