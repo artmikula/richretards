@@ -145,6 +145,50 @@ async function renderGas() {
   }
 }
 
+// --- Widget: News (RSS via rss2json) ---
+async function renderNews() {
+  const feeds = [
+    { src: 'COINDESK', url: 'https://www.coindesk.com/arc/outboundfeeds/rss/' },
+    { src: 'DECRYPT',  url: 'https://decrypt.co/feed' },
+    { src: 'YFINANCE', url: 'https://finance.yahoo.com/news/rssindex' },
+  ];
+  const proxy = (u) => `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(u)}&count=8`;
+  const shortAgo = (iso) => {
+    const ms = Date.now() - new Date(iso).getTime();
+    const m = Math.floor(ms / 60000);
+    if (m < 60) return m + 'm';
+    const h = Math.floor(m / 60);
+    if (h < 24) return h + 'h';
+    return Math.floor(h / 24) + 'd';
+  };
+  try {
+    const results = await Promise.allSettled(feeds.map(f => fetchJSON(proxy(f.url))));
+    const items = [];
+    results.forEach((res, i) => {
+      if (res.status !== 'fulfilled') return;
+      const feed = res.value;
+      if (!feed.items) return;
+      feed.items.slice(0, 6).forEach(it => items.push({
+        src: feeds[i].src,
+        title: it.title,
+        link: it.link,
+        date: it.pubDate,
+      }));
+    });
+    if (items.length === 0) throw new Error('no items');
+    items.sort((a, b) => new Date(b.date) - new Date(a.date));
+    const html = items.slice(0, 12).map(it => `
+      <a class="t-newsitem" href="${it.link}" target="_blank" rel="noopener">
+        <span class="src">${it.src}</span>${it.title}<span class="when">${shortAgo(it.date)}</span>
+      </a>
+    `).join('');
+    document.getElementById('news-body').innerHTML = html;
+    setFoot('news-foot', true);
+  } catch (e) {
+    setError('news-body', 'news-foot');
+  }
+}
+
 // --- Clock ---
 function renderClock() {
   const el = document.getElementById('terminalClock');
@@ -167,6 +211,9 @@ function init() {
 
   renderGas();
   setInterval(renderGas, 60_000); // 1 minute
+
+  renderNews();
+  setInterval(renderNews, 5 * 60_000); // 5 minutes
 }
 
 if (document.readyState === 'loading') {
