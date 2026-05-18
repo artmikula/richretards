@@ -22,6 +22,23 @@ async function fetchJSON(url, timeoutMs = 8000) {
   }
 }
 
+// Cached JSON: returns stored value if fresh, otherwise fetches and stores.
+async function cachedJSON(key, url, ttlMs) {
+  try {
+    const raw = localStorage.getItem(key);
+    if (raw) {
+      const { ts, data } = JSON.parse(raw);
+      if (Date.now() - ts < ttlMs) return data;
+    }
+  } catch (e) { /* ignore */ }
+  const data = await fetchJSON(url);
+  try { localStorage.setItem(key, JSON.stringify({ ts: Date.now(), data })); } catch (e) { /* quota */ }
+  return data;
+}
+
+// CORS proxy for endpoints that don't send Access-Control-Allow-Origin (e.g. Yahoo).
+const corsProxy = (u) => 'https://corsproxy.io/?url=' + encodeURIComponent(u);
+
 function setFoot(id, ok = true) {
   const el = document.getElementById(id);
   if (!el) return;
@@ -83,7 +100,7 @@ async function renderCrypto() {
 async function renderStocks() {
   const symbols = ['SPY', 'QQQ', 'NVDA', 'TSLA', 'GME', 'AMC'];
   const fetchOne = async (sym) => {
-    const url = `https://query1.finance.yahoo.com/v8/finance/chart/${sym}?interval=1d&range=2d`;
+    const url = corsProxy(`https://query1.finance.yahoo.com/v8/finance/chart/${sym}?interval=1d&range=2d`);
     const data = await fetchJSON(url);
     const r = data && data.chart && data.chart.result && data.chart.result[0];
     if (!r) throw new Error('no result');
@@ -188,7 +205,9 @@ async function renderNews() {
     return Math.floor(h / 24) + 'd';
   };
   try {
-    const results = await Promise.allSettled(feeds.map(f => fetchJSON(proxy(f.url))));
+    const results = await Promise.allSettled(feeds.map(f =>
+      cachedJSON('rr:news:' + f.src, proxy(f.url), 30 * 60_000)
+    ));
     const items = [];
     results.forEach((res, i) => {
       if (res.status !== 'fulfilled') return;
@@ -233,7 +252,7 @@ async function renderRekt() {
     return Math.floor(d / 7) + 'w';
   };
   try {
-    const feed = await fetchJSON(url);
+    const feed = await cachedJSON('rr:rekt', url, 30 * 60_000);
     if (!feed.items || feed.items.length === 0) throw new Error('no items');
     const body = document.getElementById('rekt-body');
     body.innerHTML = '';
