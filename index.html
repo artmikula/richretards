@@ -717,6 +717,20 @@
     .t-newsitem .src { color: #555; margin-right: 6px; }
     .t-newsitem .when { color: #444; margin-left: 6px; font-size: 0.7rem; }
 
+    .t-ref {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 6px;
+      margin: 2px 0;
+      border: 1px solid #1f1f1f;
+      color: #e0e0e0;
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+    .t-ref:hover { border-color: #ffb000; color: #ffb000; }
+    .t-ref .bonus { color: #00d084; font-size: 0.75rem; letter-spacing: 1px; }
+
     @media (max-width: 1024px) {
       .terminal-grid { grid-template-columns: repeat(2, 1fr); }
       .t-panel-wide { grid-column: span 2; }
@@ -794,6 +808,29 @@
         <div class="t-panel-head">▓ ETH GAS</div>
         <div class="t-panel-body" id="gas-body">-- LOADING --</div>
         <div class="t-panel-foot" id="gas-foot">updated --:--:--</div>
+      </div>
+
+      <div class="t-panel t-panel-wide" id="panel-refs">
+        <div class="t-panel-head">▓ DEGEN ONBOARDING — GET FUNDED</div>
+        <div class="t-panel-body" id="refs-body">
+          <a class="t-ref" href="https://accounts.binance.com/register?ref=YOURCODE" target="_blank" rel="noopener">
+            <span>BINANCE — world's largest crypto exchange</span>
+            <span class="bonus">UP TO $100 BONUS →</span>
+          </a>
+          <a class="t-ref" href="https://www.coinbase.com/join/YOURCODE" target="_blank" rel="noopener">
+            <span>COINBASE — easiest US onramp</span>
+            <span class="bonus">$10 BTC FREE →</span>
+          </a>
+          <a class="t-ref" href="https://partner.bybit.com/b/YOURCODE" target="_blank" rel="noopener">
+            <span>BYBIT — leverage trading, no KYC</span>
+            <span class="bonus">UP TO $30K BONUS →</span>
+          </a>
+          <a class="t-ref" href="https://www.kraken.com/?ref=YOURCODE" target="_blank" rel="noopener">
+            <span>KRAKEN — boomer-grade security</span>
+            <span class="bonus">$20 FREE →</span>
+          </a>
+        </div>
+        <div class="t-panel-foot">affiliate · not financial advice</div>
       </div>
 
       <div class="t-panel t-panel-wide" id="panel-news">
