@@ -34,6 +34,23 @@ function setError(bodyId, footId) {
   setFoot(footId, false);
 }
 
+function safeURL(u) {
+  return typeof u === 'string' && /^https?:\/\//i.test(u) ? u : null;
+}
+
+function el(tag, attrs, children) {
+  const node = document.createElement(tag);
+  if (attrs) for (const k in attrs) {
+    if (k === 'class') node.className = attrs[k];
+    else node.setAttribute(k, attrs[k]);
+  }
+  if (children != null) {
+    if (Array.isArray(children)) children.forEach(c => c && node.appendChild(typeof c === 'string' ? document.createTextNode(c) : c));
+    else node.appendChild(typeof children === 'string' ? document.createTextNode(children) : children);
+  }
+  return node;
+}
+
 // --- Widget: Crypto (CoinGecko) ---
 async function renderCrypto() {
   const ids = 'bitcoin,ethereum,solana,ripple,dogecoin,cardano';
@@ -104,7 +121,8 @@ async function renderFG() {
     const item = data && data.data && data.data[0];
     if (!item) throw new Error('no data');
     const v = parseInt(item.value, 10);
-    const label = item.value_classification.toUpperCase();
+    if (Number.isNaN(v)) throw new Error('bad value');
+    const rawLabel = String(item.value_classification || '').toUpperCase();
     const colorMap = {
       'EXTREME FEAR': '#ff3b3b',
       'FEAR': '#ff8a00',
@@ -112,15 +130,16 @@ async function renderFG() {
       'GREED': '#9ad929',
       'EXTREME GREED': '#00d084',
     };
-    const color = colorMap[label] || '#cccccc';
-    const blocks = Math.round(v / 10); // 0..10 filled
+    const label = colorMap[rawLabel] ? rawLabel : 'NEUTRAL';
+    const color = colorMap[label];
+    const blocks = Math.max(0, Math.min(10, Math.round(v / 10)));
     const bar = '█'.repeat(blocks) + '░'.repeat(10 - blocks);
-    document.getElementById('fg-body').innerHTML = `
-      <div style="text-align:center;font-size:2rem;color:${color};line-height:1.1;">${v}</div>
-      <div style="text-align:center;color:${color};letter-spacing:1px;font-size:0.85rem;">${label}</div>
-      <div style="text-align:center;color:${color};margin-top:6px;font-family:monospace;">${bar}</div>
-      <div style="text-align:center;color:#555;font-size:0.7rem;margin-top:4px;">crypto · alternative.me</div>
-    `;
+    const body = document.getElementById('fg-body');
+    body.innerHTML = '';
+    body.appendChild(el('div', { style: `text-align:center;font-size:2rem;color:${color};line-height:1.1;` }, String(v)));
+    body.appendChild(el('div', { style: `text-align:center;color:${color};letter-spacing:1px;font-size:0.85rem;` }, label));
+    body.appendChild(el('div', { style: `text-align:center;color:${color};margin-top:6px;font-family:monospace;` }, bar));
+    body.appendChild(el('div', { style: 'text-align:center;color:#555;font-size:0.7rem;margin-top:4px;' }, 'crypto · alternative.me'));
     setFoot('fg-foot', true);
   } catch (e) {
     setError('fg-body', 'fg-foot');
@@ -132,13 +151,20 @@ async function renderGas() {
   try {
     const data = await fetchJSON('https://api.etherscan.io/api?module=gastracker&action=gasoracle');
     if (!data || data.status !== '1' || !data.result) throw new Error('bad response');
-    const { SafeGasPrice, ProposeGasPrice, FastGasPrice } = data.result;
-    document.getElementById('gas-body').innerHTML = `
-      <div class="t-row"><span class="sym">SLOW</span><span>${SafeGasPrice} gwei</span></div>
-      <div class="t-row"><span class="sym">AVG</span><span>${ProposeGasPrice} gwei</span></div>
-      <div class="t-row"><span class="sym">FAST</span><span>${FastGasPrice} gwei</span></div>
-      <div style="margin-top:6px;color:#555;font-size:0.7rem;">mainnet · etherscan</div>
-    `;
+    const slow = Number(data.result.SafeGasPrice);
+    const avg = Number(data.result.ProposeGasPrice);
+    const fast = Number(data.result.FastGasPrice);
+    if (![slow, avg, fast].every(Number.isFinite)) throw new Error('bad gas');
+    const body = document.getElementById('gas-body');
+    const row = (label, n) => el('div', { class: 't-row' }, [
+      el('span', { class: 'sym' }, label),
+      el('span', null, fmtNum(n, 1) + ' gwei'),
+    ]);
+    body.innerHTML = '';
+    body.appendChild(row('SLOW', slow));
+    body.appendChild(row('AVG', avg));
+    body.appendChild(row('FAST', fast));
+    body.appendChild(el('div', { style: 'margin-top:6px;color:#555;font-size:0.7rem;' }, 'mainnet · etherscan'));
     setFoot('gas-foot', true);
   } catch (e) {
     setError('gas-body', 'gas-foot');
@@ -177,12 +203,18 @@ async function renderNews() {
     });
     if (items.length === 0) throw new Error('no items');
     items.sort((a, b) => new Date(b.date) - new Date(a.date));
-    const html = items.slice(0, 12).map(it => `
-      <a class="t-newsitem" href="${it.link}" target="_blank" rel="noopener">
-        <span class="src">${it.src}</span>${it.title}<span class="when">${shortAgo(it.date)}</span>
-      </a>
-    `).join('');
-    document.getElementById('news-body').innerHTML = html;
+    const body = document.getElementById('news-body');
+    body.innerHTML = '';
+    items.slice(0, 12).forEach(it => {
+      const href = safeURL(it.link);
+      if (!href) return;
+      const a = el('a', { class: 't-newsitem', href, target: '_blank', rel: 'noopener noreferrer' }, [
+        el('span', { class: 'src' }, String(it.src)),
+        ' ' + String(it.title || '').slice(0, 200) + ' ',
+        el('span', { class: 'when' }, shortAgo(it.date)),
+      ]);
+      body.appendChild(a);
+    });
     setFoot('news-foot', true);
   } catch (e) {
     setError('news-body', 'news-foot');
@@ -203,12 +235,18 @@ async function renderRekt() {
   try {
     const feed = await fetchJSON(url);
     if (!feed.items || feed.items.length === 0) throw new Error('no items');
-    const html = feed.items.slice(0, 8).map(it => `
-      <a class="t-newsitem" href="${it.link}" target="_blank" rel="noopener">
-        <span class="src">REKT</span>${it.title}<span class="when">${shortAgo(it.pubDate)}</span>
-      </a>
-    `).join('');
-    document.getElementById('rekt-body').innerHTML = html;
+    const body = document.getElementById('rekt-body');
+    body.innerHTML = '';
+    feed.items.slice(0, 8).forEach(it => {
+      const href = safeURL(it.link);
+      if (!href) return;
+      const a = el('a', { class: 't-newsitem', href, target: '_blank', rel: 'noopener noreferrer' }, [
+        el('span', { class: 'src' }, 'REKT'),
+        ' ' + String(it.title || '').slice(0, 200) + ' ',
+        el('span', { class: 'when' }, shortAgo(it.pubDate)),
+      ]);
+      body.appendChild(a);
+    });
     setFoot('rekt-foot', true);
   } catch (e) {
     setError('rekt-body', 'rekt-foot');
@@ -239,10 +277,10 @@ function init() {
   setInterval(renderGas, 60_000); // 1 minute
 
   renderNews();
-  setInterval(renderNews, 5 * 60_000); // 5 minutes
+  setInterval(renderNews, 30 * 60_000); // 30 minutes (rss2json free tier: 10 req/hr)
 
   renderRekt();
-  setInterval(renderRekt, 15 * 60_000); // 15 minutes
+  setInterval(renderRekt, 30 * 60_000); // 30 minutes
 }
 
 if (document.readyState === 'loading') {
