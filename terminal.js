@@ -189,6 +189,32 @@ async function renderNews() {
   }
 }
 
+// --- Widget: Rug pulls / hacks (rekt.news RSS via rss2json) ---
+async function renderRekt() {
+  const url = 'https://api.rss2json.com/v1/api.json?rss_url=' +
+              encodeURIComponent('https://rekt.news/rss/feed.xml') + '&count=8';
+  const shortAgo = (iso) => {
+    const ms = Date.now() - new Date(iso).getTime();
+    const d = Math.floor(ms / 86400000);
+    if (d < 1) return 'today';
+    if (d < 7) return d + 'd';
+    return Math.floor(d / 7) + 'w';
+  };
+  try {
+    const feed = await fetchJSON(url);
+    if (!feed.items || feed.items.length === 0) throw new Error('no items');
+    const html = feed.items.slice(0, 8).map(it => `
+      <a class="t-newsitem" href="${it.link}" target="_blank" rel="noopener">
+        <span class="src">REKT</span>${it.title}<span class="when">${shortAgo(it.pubDate)}</span>
+      </a>
+    `).join('');
+    document.getElementById('rekt-body').innerHTML = html;
+    setFoot('rekt-foot', true);
+  } catch (e) {
+    setError('rekt-body', 'rekt-foot');
+  }
+}
+
 // --- Clock ---
 function renderClock() {
   const el = document.getElementById('terminalClock');
@@ -214,6 +240,9 @@ function init() {
 
   renderNews();
   setInterval(renderNews, 5 * 60_000); // 5 minutes
+
+  renderRekt();
+  setInterval(renderRekt, 15 * 60_000); // 15 minutes
 }
 
 if (document.readyState === 'loading') {
