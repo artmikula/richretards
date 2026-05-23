@@ -23,8 +23,10 @@
   <meta name="twitter:description" content="The worst financial decisions on the internet, broken down so you don't repeat them. Free weekly newsletter." />
 
   <!-- Favicon & OG Image -->
-  <meta property="og:image" content="" />
-  <meta name="twitter:image" content="" />
+  <meta property="og:image" content="https://richretards.com/og.svg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:image" content="https://richretards.com/og.svg" />
 
   <!-- Additional SEO -->
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
@@ -33,6 +35,25 @@
   <link rel="alternate" type="application/rss+xml" title="Rich Retards RSS" href="/rss.xml" />
 
   <!-- JSON-LD: Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Rich Retards",
+    "url": "https://richretards.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://richretards.com/og.svg",
+      "width": 1200,
+      "height": 630
+    },
+    "description": "Scam alerts, financial fails, and brutally honest money lessons. The internet's most honest finance community.",
+    "foundingDate": "2026",
+    "publishingPrinciples": "https://richretards.com/about/"
+  }
+  </script>
+
+  <!-- JSON-LD: WebSite -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -144,6 +165,10 @@
     ]
   }
   </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 
   <style>
     /* GEOCITIES ENERGY */
@@ -701,6 +726,9 @@
     .t-neg { color: #ff3b3b; }
     .t-muted { color: #666; }
     .t-err { color: #ff3b3b; }
+    .t-loading { color: #444; font-size: 0.85rem; }
+    .t-loading::after { content: ''; animation: ldots 1.2s steps(4, end) infinite; }
+    @keyframes ldots { 0%{content:''} 25%{content:'.'} 50%{content:'..'} 75%{content:'...'} 100%{content:''} }
 
     .t-newsitem {
       display: block;
@@ -804,10 +832,10 @@
         <div class="t-panel-foot" id="fg-foot">updated --:--:--</div>
       </div>
 
-      <div class="t-panel" id="panel-gas">
-        <div class="t-panel-head">▓ ETH GAS</div>
-        <div class="t-panel-body" id="gas-body">-- LOADING --</div>
-        <div class="t-panel-foot" id="gas-foot">updated --:--:--</div>
+      <div class="t-panel" id="panel-market">
+        <div class="t-panel-head">▓ MARKET CAP</div>
+        <div class="t-panel-body" id="market-body">-- LOADING --</div>
+        <div class="t-panel-foot" id="market-foot">updated --:--:--</div>
       </div>
 
       <div class="t-panel t-panel-wide" id="panel-refs">
@@ -1267,6 +1295,11 @@
     <p>Looking for some fun? Check out <a href="https://stake.us/?c=IhtHsG9P" style="color:#00d4aa;">Stake.us</a> — at least when you gamble there, you know the odds upfront. Unlike that "guaranteed returns" crypto group.</p>
   </section>
 
+  <!-- REAL VIEW COUNTER — fixed bottom right -->
+  <div id="view-counter" style="position:fixed;bottom:14px;right:14px;z-index:999;background:#000;border:1px solid #1a1a1a;padding:5px 10px;font-family:'VT323',monospace;font-size:1rem;color:#333;pointer-events:none;opacity:0;transition:opacity 0.5s;">
+    👁 <span id="view-count">...</span>
+  </div>
+
   <!-- FOOTER -->
   <footer class="bottom-bar">
     <div class="links">
@@ -1301,6 +1334,21 @@
 </div>
 
 <script>
+  // Real page view counter (countapi.dev — free, no signup)
+  (async () => {
+    try {
+      const r = await fetch('https://api.counterapi.dev/v1/richretards-com/views/up', { method: 'GET' });
+      const j = await r.json();
+      const n = j?.count ?? j?.value;
+      if (n != null) {
+        document.getElementById('view-count').textContent = Number(n).toLocaleString();
+        const el = document.getElementById('view-counter');
+        el.style.opacity = '1';
+        el.style.pointerEvents = 'auto';
+      }
+    } catch (_) {}
+  })();
+
   // Fake visitor counter
   function randomBetween(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;

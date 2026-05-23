@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" fill="#000"/>
+  <text x="16" y="10" text-anchor="middle" font-size="8" fill="#ff0000" font-family="Impact, Arial Black, sans-serif" font-weight="900">RICH</text>
+  <text x="16" y="22" text-anchor="middle" font-size="8" fill="#00ff00" font-family="Impact, Arial Black, sans-serif" font-weight="900">RETARDS</text>
+  <rect x="1" y="1" width="30" height="30" fill="none" stroke="#00ff00" stroke-width="1"/>
+</svg>
