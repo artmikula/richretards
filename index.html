@@ -126,6 +126,14 @@
           "@type": "Answer",
           "text": "Use an AI contract scanner like Fineprint (fineprintapp.com) to instantly flag hidden fees, auto-renewal clauses, and predatory terms in any contract or lease agreement."
         }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Bitcoin near the top? What is the Pi Cycle Top indicator?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The Pi Cycle Top indicator compares Bitcoin's 111-day moving average to twice its 350-day moving average. When the 111DMA crosses above the 350DMA x2, it has historically marked the cycle top within days, calling the 2013, 2017, and 2021 peaks. Rich Retards tracks this live with real BTC price data so you can see how close the current cycle is to a top signal."
+        }
       }
     ]
   }
@@ -169,6 +177,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- Pi Cycle Top widget deps -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@400;700&display=swap" rel="stylesheet">
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
 
   <style>
     /* GEOCITIES ENERGY */
@@ -767,6 +780,43 @@
       .terminal-grid { grid-template-columns: 1fr; }
       .t-panel-wide { grid-column: span 1; }
     }
+
+    /* === PI CYCLE TOP WIDGET === */
+    .rr-widget{
+      --rr-bg:#0f0f0f;--rr-surface:#161616;--rr-border:#222;
+      --rr-red:#c0392b;--rr-text:#e2dfd6;--rr-muted:#555;
+      --rr-mono:'IBM Plex Mono','Courier New',monospace;
+      --rr-display:'Bebas Neue','Impact',sans-serif;
+      --rr-sans:'IBM Plex Sans Condensed','Arial Narrow',sans-serif;
+      background:var(--rr-bg);color:var(--rr-text);
+      font-family:var(--rr-sans);
+      border-top:1px solid #222;border-bottom:2px solid var(--rr-red);
+      padding:20px 24px 24px;width:100%;position:relative;z-index:2;
+    }
+    .rr-hdr{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+    .rr-eye{font-family:var(--rr-mono);font-size:10px;color:var(--rr-red);letter-spacing:0.18em;text-transform:uppercase}
+    .rr-upd{font-family:var(--rr-mono);font-size:10px;color:var(--rr-muted)}
+    .rr-phase{font-family:var(--rr-display);font-size:34px;letter-spacing:0.04em;line-height:1;margin-bottom:16px}
+    .rr-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:16px}
+    .rr-stat{border-left:2px solid var(--rr-border);padding:6px 10px}
+    .rr-sl{font-family:var(--rr-mono);font-size:9px;color:var(--rr-muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:2px}
+    .rr-sv{font-family:var(--rr-mono);font-size:14px;font-weight:500}
+    .rr-gauge-row{margin-bottom:16px}
+    .rr-gh{display:flex;justify-content:space-between;font-family:var(--rr-mono);font-size:9px;color:var(--rr-muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:5px}
+    .rr-track{height:5px;background:#1e1e1e;overflow:hidden;margin-bottom:3px}
+    .rr-fill{height:100%;width:0%;transition:width 1.2s ease;background:var(--rr-red)}
+    .rr-ticks{display:flex;justify-content:space-between;font-family:var(--rr-mono);font-size:8px;color:#2e2e2e}
+    .rr-adv{background:var(--rr-surface);border-left:3px solid var(--rr-red);padding:10px 14px;margin-bottom:20px}
+    .rr-atag{font-family:var(--rr-mono);font-size:9px;color:var(--rr-red);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px}
+    .rr-abody{font-family:var(--rr-sans);font-size:13px;line-height:1.55;color:var(--rr-text);margin-bottom:6px}
+    .rr-aact{font-family:var(--rr-mono);font-size:11px;font-weight:500;margin-bottom:6px}
+    .rr-disc{font-family:var(--rr-mono);font-size:8px;color:#3a3a3a}
+    .rr-chart-label{font-family:var(--rr-mono);font-size:9px;color:var(--rr-muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px}
+    .rr-chart-wrap{position:relative;width:100%;height:320px;margin-bottom:8px}
+    .rr-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:6px}
+    .rr-legend span{display:flex;align-items:center;gap:5px;font-family:var(--rr-mono);font-size:9px;color:var(--rr-muted)}
+    .rr-ld{display:inline-block;width:18px;height:2px}
+    @media(max-width:480px){.rr-phase{font-size:24px}}
   </style>
 </head>
 <body>
@@ -876,6 +926,192 @@
     </div>
   </section>
 
+  <!-- PI CYCLE TOP — is Bitcoin near the top? -->
+  <section class="rr-widget" id="pi-cycle" aria-label="Bitcoin Pi Cycle Top indicator">
+    <div class="rr-hdr">
+      <span class="rr-eye">Pi Cycle Top</span>
+      <span style="color:#333;font-size:10px">·</span>
+      <span class="rr-upd" id="rrUpd">fetching data...</span>
+    </div>
+
+    <h2 class="rr-phase" id="rrPhase" style="margin:0 0 16px;">—</h2>
+
+    <div class="rr-stats">
+      <div class="rr-stat"><div class="rr-sl">BTC price</div><div class="rr-sv" id="rrPrice">—</div></div>
+      <div class="rr-stat"><div class="rr-sl">111DMA</div><div class="rr-sv" id="rr111">—</div></div>
+      <div class="rr-stat"><div class="rr-sl">350DMA ×2</div><div class="rr-sv" id="rr350">—</div></div>
+      <div class="rr-stat"><div class="rr-sl">gap to top</div><div class="rr-sv" id="rrGap">—</div></div>
+      <div class="rr-stat"><div class="rr-sl">Pi tops found</div><div class="rr-sv" id="rrTops">—</div></div>
+    </div>
+
+    <div class="rr-gauge-row">
+      <div class="rr-gh"><span>proximity to top signal</span><span id="rrPct">—</span></div>
+      <div class="rr-track"><div class="rr-fill" id="rrFill"></div></div>
+      <div class="rr-ticks"><span>accumulating</span><span>building</span><span>danger</span><span>SELL</span></div>
+    </div>
+
+    <div class="rr-adv">
+      <div class="rr-atag">look retard. this means:</div>
+      <div class="rr-abody" id="rrAdvice">Loading market intelligence for degenerates...</div>
+      <div class="rr-aact" id="rrAction"></div>
+      <div class="rr-disc">not financial advice. we're all gonna make it (statistically unlikely). data via CoinGecko.</div>
+    </div>
+
+    <div class="rr-chart-label">full cycle history (log scale)</div>
+    <div class="rr-chart-wrap">
+      <canvas id="rrChart" role="img" aria-label="Bitcoin Pi Cycle Top full history logarithmic chart">Bitcoin Pi Cycle historical chart.</canvas>
+    </div>
+    <div class="rr-legend">
+      <span><span class="rr-ld" style="background:#d4b840"></span>BTC price</span>
+      <span><span class="rr-ld" style="background:#00bcd4"></span>111DMA</span>
+      <span><span class="rr-ld" style="background:#e040fb"></span>350DMA ×2</span>
+      <span><span class="rr-ld" style="background:rgba(192,57,43,0.7)"></span>Pi Top signal</span>
+    </div>
+  </section>
+
+  <script>
+  (async()=>{
+    const $=id=>document.getElementById(id);
+    const PHASES=[
+      {max:0.5,label:'EARLY ACCUMULATION',color:'#27ae60',
+       advice:"Cycle is young. The masses are still coping that crypto is dead. Historically this is when quiet guys stack sats and touch grass. The Pi lines aren't even close to crossing.",
+       action:"→ Accumulate. DCA. Boring wins."},
+      {max:0.7,label:'MID CYCLE MOMENTUM',color:'#2980b9',
+       advice:"Things are moving. Media is warming up. Normie friends are asking questions again. We're not in mania territory — the 111DMA has a long way to catch the 350DMA×2.",
+       action:"→ Hold your bags. Stop checking every 5 minutes."},
+      {max:0.85,label:'LATE BULL — STAY ALERT',color:'#e67e22',
+       advice:"We're getting spicy. 111DMA is closing in on the 350DMA×2. Your Uber driver has crypto opinions. CNBC is bullish. These are historically not great signs for continued upside.",
+       action:"→ Consider taking some profits. Not all. Just enough so you don't cry later."},
+      {max:0.96,label:'DANGER ZONE',color:'#e74c3c',
+       advice:"The lines are almost touching. Every time this happened before, the top was days away. You'll say 'this cycle is different.' It's not different. It's never different.",
+       action:"→ Reduce exposure. Set sell orders. Do it now while you still can."},
+      {max:99,label:'TOP SIGNAL TRIGGERED',color:'#c0392b',
+       advice:"THE 111DMA HAS CROSSED THE 350DMA×2. This indicator called the top in 2013, 2017, and 2021 — all within 3 days. Whether you act is your problem.",
+       action:"→ This is not a drill. Good luck out there."}
+    ];
+
+    function sma(arr,n){
+      return arr.map((_,i)=>{
+        if(i<n-1)return null;
+        let s=0;for(let j=i-n+1;j<=i;j++)s+=arr[j];
+        return s/n;
+      });
+    }
+
+    let prices=[];
+    try{
+      const r=await fetch('https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=max&interval=daily');
+      const j=await r.json();
+      prices=j.prices.map(p=>({t:p[0],v:p[1]}));
+      $('rrUpd').textContent='live · '+new Date().toLocaleTimeString()+' · '+prices.length+' days of data';
+    }catch(e){
+      $('rrUpd').textContent='api error — check console';
+    }
+
+    if(!prices.length)return;
+
+    const vals=prices.map(p=>p.v);
+    const dates=prices.map(p=>new Date(p.t));
+    const ma111=sma(vals,111);
+    const ma350x2=sma(vals,350).map(v=>v!==null?v*2:null);
+
+    const last=vals.length-1;
+    const price=vals[last],v111=ma111[last],v350=ma350x2[last];
+    const ratio=v111&&v350?v111/v350:0;
+    const pct=Math.min(ratio*100,100);
+    const gap=v350&&v111?(v350-v111)/v350*100:0;
+
+    const fmt=v=>'$'+Math.round(v).toLocaleString();
+    $('rrPrice').textContent=fmt(price);
+    $('rr111').textContent=v111?fmt(v111):'—';
+    $('rr350').textContent=v350?fmt(v350):'—';
+    $('rrGap').textContent=(gap>0?'-':'+')+Math.abs(gap).toFixed(1)+'%';
+
+    const crossovers=[];
+    for(let i=1;i<vals.length;i++){
+      if(ma111[i-1]!==null&&ma350x2[i-1]!==null&&ma111[i]!==null&&ma350x2[i]!==null){
+        if(ma111[i-1]<=ma350x2[i-1]&&ma111[i]>ma350x2[i])crossovers.push(i);
+      }
+    }
+    $('rrTops').textContent=crossovers.length;
+
+    const phase=PHASES.find(p=>ratio<=p.max)||PHASES[PHASES.length-1];
+    $('rrPhase').textContent=phase.label;
+    $('rrPhase').style.color=phase.color;
+    $('rrAdvice').textContent=phase.advice;
+    $('rrAction').textContent=phase.action;
+    $('rrAction').style.color=phase.color;
+    $('rrPct').textContent=pct.toFixed(1)+'%';
+
+    const fill=$('rrFill');
+    fill.style.background=phase.color;
+    setTimeout(()=>{fill.style.width=pct+'%';},150);
+
+    const labels=dates.map(d=>d.getMonth()===0?String(d.getFullYear()):'');
+
+    const annotations={};
+    crossovers.forEach((idx,i)=>{
+      annotations['top'+i]={
+        type:'line',xMin:idx,xMax:idx,
+        borderColor:'rgba(192,57,43,0.8)',borderWidth:1,borderDash:[5,3],
+        label:{
+          display:true,content:'Pi Top',position:'end',yAdjust:8,
+          backgroundColor:'#c0392b',color:'#fff',
+          font:{size:8,family:"'IBM Plex Mono',monospace"},
+          padding:{x:4,y:2}
+        }
+      };
+    });
+
+    // wait for deferred Chart.js (+ annotation plugin) to finish loading
+    let tries=0;
+    while(typeof window.Chart==='undefined'&&tries++<100){await new Promise(r=>setTimeout(r,50));}
+    if(typeof window.Chart==='undefined')return;
+
+    new Chart($('rrChart'),{
+      type:'line',
+      data:{
+        labels,
+        datasets:[
+          {label:'BTC Price',data:vals,borderColor:'#d4b840',borderWidth:1.2,pointRadius:0,tension:0.1,order:3},
+          {label:'111DMA',data:ma111,borderColor:'#00bcd4',borderWidth:1.5,pointRadius:0,tension:0.2,order:2},
+          {label:'350DMA×2',data:ma350x2,borderColor:'#e040fb',borderWidth:1.5,borderDash:[6,3],pointRadius:0,tension:0.2,order:1}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:'index',intersect:false},
+        plugins:{
+          legend:{display:false},
+          tooltip:{
+            backgroundColor:'#111',titleColor:'#888',bodyColor:'#e2dfd6',
+            borderColor:'#333',borderWidth:1,
+            callbacks:{
+              title:ctx=>{const d=dates[ctx[0].dataIndex];return d?d.toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}):'';},
+              label:ctx=>ctx.parsed.y?ctx.dataset.label+': $'+Math.round(ctx.parsed.y).toLocaleString():null
+            }
+          },
+          annotation:{annotations}
+        },
+        scales:{
+          x:{
+            ticks:{color:'#444',font:{size:9},maxRotation:0,autoSkip:false,callback:(val,i)=>labels[i]||null},
+            grid:{color:'#1a1a1a'},border:{color:'#222'}
+          },
+          y:{
+            type:'logarithmic',
+            ticks:{
+              color:'#444',font:{size:9},
+              callback:v=>[100,1000,10000,100000].includes(v)?'$'+v.toLocaleString():null
+            },
+            grid:{color:'#1a1a1a'},border:{color:'#222'}
+          }
+        }
+      }
+    });
+  })();
+  </script>
+
   <!-- AD BANNER 1 — STAKE -->
   <a href="https://stake.us/?c=IhtHsG9P" target="_blank" rel="noopener" class="ad-banner" style="display:block;text-decoration:none;color:#fff;background:linear-gradient(90deg,#00d4aa,#0088aa);">
     🎰🎰🎰 STAKE.US — THE ONLY HONEST CASINO (THEY ACTUALLY TELL YOU THE ODDS) — PLAY NOW → 🎰🎰🎰
@@ -888,6 +1124,7 @@
     <div class="sidebar">
       <h3>🔥 Navigation</h3>
       <a href="/" class="sidebar-link">🏠 Home</a>
+      <a href="/#pi-cycle" class="sidebar-link">📈 Bitcoin Top Signal</a>
       <a href="/scams/discord-guaranteed-returns/" class="sidebar-link">💀 Scam Alerts</a>
       <a href="/fails/nft-rock-loan/" class="sidebar-link">📉 Financial Fails</a>
       <a href="/wisdom/5-contract-clauses/" class="sidebar-link">🧠 Actual Wisdom</a>

@@ -225,7 +225,20 @@ async function renderMarket() {
   } catch (e) { setError('market-body', 'market-foot'); }
 }
 
-// --- Widget: News (RSS feeds, parsed in-browser via allorigins proxy) ---
+// --- Fetch any RSS feed as JSON via rss2json (handles CORS + parsing) ---
+async function fetchFeedJSON(url, src) {
+  const api = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(url);
+  const data = await fetchJSON(api, 8000);
+  if (data?.status !== 'ok' || !Array.isArray(data.items)) throw new Error('rss2json: ' + (data?.message || 'bad response'));
+  return data.items.slice(0, 8).map(it => ({
+    src,
+    title: (it.title || '').trim(),
+    link:  (it.link  || '').trim(),
+    date:  it.pubDate || '',
+  })).filter(i => i.title && i.link);
+}
+
+// --- Widget: News (RSS feeds via rss2json) ---
 async function renderNews() {
   setLoading('news-body');
   const feeds = [
@@ -235,7 +248,7 @@ async function renderNews() {
   ];
   try {
     const results = await Promise.allSettled(feeds.map(f =>
-      cachedFetch('rr:news3:' + f.src, () => proxiedText(f.url).then(xml => parseRSS(xml, f.src)), 30 * 60_000)
+      cachedFetch('rr:news4:' + f.src, () => fetchFeedJSON(f.url, f.src), 30 * 60_000)
     ));
     const items = results.flatMap(r => r.status === 'fulfilled' ? r.value : []);
     if (items.length === 0) throw new Error('no items');
@@ -260,7 +273,7 @@ async function renderRekt() {
   setLoading('rekt-body');
   const url = 'https://rekt.news/rss/feed.xml';
   try {
-    const items = await cachedFetch('rr:rekt2', () => proxiedText(url).then(xml => parseRSS(xml, 'REKT')), 30 * 60_000);
+    const items = await cachedFetch('rr:rekt3', () => fetchFeedJSON(url, 'REKT'), 30 * 60_000);
     if (items.length === 0) throw new Error('no items');
     const body = document.getElementById('rekt-body');
     body.innerHTML = '';
