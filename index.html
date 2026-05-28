@@ -861,6 +861,283 @@
     🎰🎰🎰 STAKE.US — THE ONLY HONEST CASINO (THEY ACTUALLY TELL YOU THE ODDS) — PLAY NOW → 🎰🎰🎰
   </a>
 
+  <!-- LIVE MARKET DASHBOARD -->
+  <h2 class="section-header" id="dashboard" style="background:linear-gradient(90deg,#0066aa,#0099cc);max-width:1400px;margin:24px auto 12px;">📊 LIVE MARKET DASHBOARD 📊</h2>
+  <!-- TERMINAL (sober finance dashboard) -->
+  <section class="terminal" id="terminal">
+    <div class="terminal-bar">
+      <span class="terminal-title">▓ RR TERMINAL</span>
+      <span class="terminal-status" id="terminalStatus">● LIVE</span>
+      <span class="terminal-clock" id="terminalClock">--:--:-- UTC</span>
+    </div>
+
+    <div class="terminal-grid">
+
+      <div class="t-panel" id="panel-crypto">
+        <div class="t-panel-head">▓ CRYPTO</div>
+        <div class="t-panel-body" id="crypto-body">-- LOADING --</div>
+        <div class="t-panel-foot" id="crypto-foot">updated --:--:--</div>
+      </div>
+
+      <div class="t-panel" id="panel-stocks">
+        <div class="t-panel-head">▓ STOCKS / INDICES</div>
+        <div class="t-panel-body" id="stocks-body">-- LOADING --</div>
+        <div class="t-panel-foot" id="stocks-foot">updated --:--:--</div>
+      </div>
+
+      <div class="t-panel" id="panel-fg">
+        <div class="t-panel-head">▓ FEAR &amp; GREED</div>
+        <div class="t-panel-body" id="fg-body">-- LOADING --</div>
+        <div class="t-panel-foot" id="fg-foot">updated --:--:--</div>
+      </div>
+
+      <div class="t-panel" id="panel-market">
+        <div class="t-panel-head">▓ MARKET CAP</div>
+        <div class="t-panel-body" id="market-body">-- LOADING --</div>
+        <div class="t-panel-foot" id="market-foot">updated --:--:--</div>
+      </div>
+
+      <div class="t-panel t-panel-wide" id="panel-refs">
+        <div class="t-panel-head">▓ DEGEN ONBOARDING — GET FUNDED</div>
+        <div class="t-panel-body" id="refs-body">
+          <a class="t-ref" href="https://accounts.binance.us/register?ref=YOURCODE" target="_blank" rel="noopener">
+            <span>BINANCE.US — low-fee US exchange</span>
+            <span class="bonus">SIGN UP →</span>
+          </a>
+          <a class="t-ref" href="https://www.coinbase.com/join/YOURCODE" target="_blank" rel="noopener">
+            <span>COINBASE — easiest US onramp</span>
+            <span class="bonus">$10 BTC FREE →</span>
+          </a>
+          <a class="t-ref" href="https://www.kraken.com/?ref=YOURCODE" target="_blank" rel="noopener">
+            <span>KRAKEN — boomer-grade security</span>
+            <span class="bonus">$20 FREE →</span>
+          </a>
+          <a class="t-ref" href="https://www.gemini.com/share/YOURCODE" target="_blank" rel="noopener">
+            <span>GEMINI — Winklevoss twins' exchange</span>
+            <span class="bonus">$10 BTC FREE →</span>
+          </a>
+        </div>
+        <div class="t-panel-foot">affiliate · not financial advice</div>
+      </div>
+
+      <div class="t-panel t-panel-wide" id="panel-news">
+        <div class="t-panel-head">▓ NEWS</div>
+        <div class="t-panel-body" id="news-body">-- LOADING --</div>
+        <div class="t-panel-foot" id="news-foot">updated --:--:--</div>
+      </div>
+
+      <div class="t-panel t-panel-wide" id="panel-rekt">
+        <div class="t-panel-head">▓ RUG PULLS &amp; HACKS</div>
+        <div class="t-panel-body" id="rekt-body">-- LOADING --</div>
+        <div class="t-panel-foot" id="rekt-foot">updated --:--:--</div>
+      </div>
+
+    </div>
+  </section>
+
+  <h2 class="section-header" id="pi-cycle-heading" style="background:linear-gradient(90deg,#c0392b,#ff4400);max-width:1400px;margin:24px auto 12px;"><a href="/pi-cycle/" style="color:inherit;text-decoration:none;">📈 IS BITCOIN NEAR THE TOP? — PI CYCLE INDICATOR 📈</a></h2>
+  <div style="max-width:1400px;margin:0 auto 8px;padding:0 16px;font-family:'VT323',monospace;font-size:14px;color:#888;">Full guide and live tracker → <a href="/pi-cycle/" style="color:#ff6644;">richretards.com/pi-cycle/</a></div>
+  <!-- PI CYCLE TOP — is Bitcoin near the top? -->
+  <section class="rr-widget" id="pi-cycle" aria-label="Bitcoin Pi Cycle Top indicator">
+    <div class="rr-hdr">
+      <span class="rr-eye">Pi Cycle Top</span>
+      <span style="color:#333;font-size:10px">·</span>
+      <span class="rr-upd" id="rrUpd">fetching data...</span>
+    </div>
+
+    <h2 class="rr-phase" id="rrPhase" style="margin:0 0 12px;">—</h2>
+
+    <div class="rr-stats">
+      <div class="rr-stat"><div class="rr-sl">BTC price</div><div class="rr-sv" id="rrPrice">—</div></div>
+      <div class="rr-stat"><div class="rr-sl">111DMA</div><div class="rr-sv" id="rr111">—</div></div>
+      <div class="rr-stat"><div class="rr-sl">350DMA ×2</div><div class="rr-sv" id="rr350">—</div></div>
+      <div class="rr-stat"><div class="rr-sl">gap to top</div><div class="rr-sv" id="rrGap">—</div></div>
+      <div class="rr-stat"><div class="rr-sl">Pi tops found</div><div class="rr-sv" id="rrTops">—</div></div>
+    </div>
+
+    <div class="rr-gauge-row">
+      <div class="rr-gh"><span>proximity to top signal</span><span id="rrPct">—</span></div>
+      <div class="rr-track"><div class="rr-fill" id="rrFill"></div></div>
+      <div class="rr-ticks"><span>accumulating</span><span>building</span><span>danger</span><span>SELL</span></div>
+    </div>
+
+    <div class="rr-adv">
+      <div class="rr-atag">look retard. this means:</div>
+      <div class="rr-abody" id="rrAdvice">Loading market intelligence for degenerates...</div>
+      <div class="rr-aact" id="rrAction"></div>
+      <div class="rr-disc">not financial advice. we're all gonna make it (statistically unlikely). data via CryptoCompare.</div>
+    </div>
+
+    <div class="rr-chart-label">full cycle history (log scale)</div>
+    <div class="rr-chart-wrap">
+      <canvas id="rrChart" role="img" aria-label="Bitcoin Pi Cycle Top full history logarithmic chart">Bitcoin Pi Cycle historical chart.</canvas>
+    </div>
+    <div class="rr-legend">
+      <span><span class="rr-ld" style="background:#d4b840"></span>BTC price</span>
+      <span><span class="rr-ld" style="background:#00bcd4"></span>111DMA</span>
+      <span><span class="rr-ld" style="background:#e040fb"></span>350DMA ×2</span>
+      <span><span class="rr-ld" style="background:rgba(192,57,43,0.7)"></span>Pi Top signal</span>
+    </div>
+  </section>
+
+  <script>
+  (async()=>{
+    const $=id=>document.getElementById(id);
+    const PHASES=[
+      {max:0.5,label:'EARLY ACCUMULATION',color:'#27ae60',
+       advice:"Cycle is young. The masses are still coping that crypto is dead. Historically this is when quiet guys stack sats and touch grass. The Pi lines aren't even close to crossing.",
+       action:"→ Accumulate. DCA. Boring wins."},
+      {max:0.7,label:'MID CYCLE MOMENTUM',color:'#2980b9',
+       advice:"Things are moving. Media is warming up. Normie friends are asking questions again. We're not in mania territory — the 111DMA has a long way to catch the 350DMA×2.",
+       action:"→ Hold your bags. Stop checking every 5 minutes."},
+      {max:0.85,label:'LATE BULL — STAY ALERT',color:'#e67e22',
+       advice:"We're getting spicy. 111DMA is closing in on the 350DMA×2. Your Uber driver has crypto opinions. CNBC is bullish. These are historically not great signs for continued upside.",
+       action:"→ Consider taking some profits. Not all. Just enough so you don't cry later."},
+      {max:0.96,label:'DANGER ZONE',color:'#e74c3c',
+       advice:"The lines are almost touching. Every time this happened before, the top was days away. You'll say 'this cycle is different.' It's not different. It's never different.",
+       action:"→ Reduce exposure. Set sell orders. Do it now while you still can."},
+      {max:99,label:'TOP SIGNAL TRIGGERED',color:'#c0392b',
+       advice:"THE 111DMA HAS CROSSED THE 350DMA×2. This indicator called the top in 2013, 2017, and 2021 — all within 3 days. Whether you act is your problem.",
+       action:"→ This is not a drill. Good luck out there."}
+    ];
+
+    function sma(arr,n){
+      return arr.map((_,i)=>{
+        if(i<n-1)return null;
+        let s=0;for(let j=i-n+1;j<=i;j++)s+=arr[j];
+        return s/n;
+      });
+    }
+
+    // CryptoCompare daily history (free, no key). Free CoinGecko now caps
+    // history to 365 days, which is useless for a 350-day MA indicator.
+    // Paginate backwards via toTs to assemble multi-year history.
+    async function fetchCC(toTs){
+      const url='https://min-api.cryptocompare.com/data/v2/histoday?fsym=BTC&tsym=USD&limit=2000'+(toTs?'&toTs='+toTs:'');
+      const r=await fetch(url);
+      const j=await r.json();
+      if(j.Response!=='Success'||!j.Data?.Data) throw new Error(j.Message||'cryptocompare error');
+      return j.Data.Data.filter(d=>d.close>0).map(d=>({t:d.time*1000,v:d.close}));
+    }
+    let prices=[];
+    try{
+      const chunkA=await fetchCC();
+      const oldest=chunkA[0]?.time;
+      const chunkB=await fetchCC(chunkA[0]?.t/1000-86400).catch(()=>[]);
+      const chunkC=chunkB.length?await fetchCC(chunkB[0]?.t/1000-86400).catch(()=>[]):[];
+      const merged=[...chunkC,...chunkB,...chunkA];
+      const seen=new Set();
+      prices=merged.filter(p=>{if(seen.has(p.t))return false;seen.add(p.t);return true;});
+      $('rrUpd').textContent='live · '+new Date().toLocaleTimeString()+' · '+prices.length+' days of data';
+    }catch(e){
+      console.error('Pi Cycle fetch failed:',e);
+      $('rrUpd').textContent='api error — check console';
+    }
+
+    if(!prices.length)return;
+
+    const vals=prices.map(p=>p.v);
+    const dates=prices.map(p=>new Date(p.t));
+    const ma111=sma(vals,111);
+    const ma350x2=sma(vals,350).map(v=>v!==null?v*2:null);
+
+    const last=vals.length-1;
+    const price=vals[last],v111=ma111[last],v350=ma350x2[last];
+    const ratio=v111&&v350?v111/v350:0;
+    const pct=Math.min(ratio*100,100);
+    const gap=v350&&v111?(v350-v111)/v350*100:0;
+
+    const fmt=v=>'$'+Math.round(v).toLocaleString();
+    $('rrPrice').textContent=fmt(price);
+    $('rr111').textContent=v111?fmt(v111):'—';
+    $('rr350').textContent=v350?fmt(v350):'—';
+    $('rrGap').textContent=(gap>0?'-':'+')+Math.abs(gap).toFixed(1)+'%';
+
+    const crossovers=[];
+    for(let i=1;i<vals.length;i++){
+      if(ma111[i-1]!==null&&ma350x2[i-1]!==null&&ma111[i]!==null&&ma350x2[i]!==null){
+        if(ma111[i-1]<=ma350x2[i-1]&&ma111[i]>ma350x2[i])crossovers.push(i);
+      }
+    }
+    $('rrTops').textContent=crossovers.length;
+
+    const phase=PHASES.find(p=>ratio<=p.max)||PHASES[PHASES.length-1];
+    $('rrPhase').textContent=phase.label;
+    $('rrPhase').style.color=phase.color;
+    $('rrAdvice').textContent=phase.advice;
+    $('rrAction').textContent=phase.action;
+    $('rrAction').style.color=phase.color;
+    $('rrPct').textContent=pct.toFixed(1)+'%';
+
+    const fill=$('rrFill');
+    fill.style.background=phase.color;
+    setTimeout(()=>{fill.style.width=pct+'%';},150);
+
+    const labels=dates.map(d=>d.getMonth()===0?String(d.getFullYear()):'');
+
+    const annotations={};
+    crossovers.forEach((idx,i)=>{
+      annotations['top'+i]={
+        type:'line',xMin:idx,xMax:idx,
+        borderColor:'rgba(192,57,43,0.8)',borderWidth:1,borderDash:[5,3],
+        label:{
+          display:true,content:'Pi Top',position:'end',yAdjust:8,
+          backgroundColor:'#c0392b',color:'#fff',
+          font:{size:8,family:"'IBM Plex Mono',monospace"},
+          padding:{x:4,y:2}
+        }
+      };
+    });
+
+    // wait for deferred Chart.js (+ annotation plugin) to finish loading
+    let tries=0;
+    while(typeof window.Chart==='undefined'&&tries++<100){await new Promise(r=>setTimeout(r,50));}
+    if(typeof window.Chart==='undefined')return;
+
+    new Chart($('rrChart'),{
+      type:'line',
+      data:{
+        labels,
+        datasets:[
+          {label:'BTC Price',data:vals,borderColor:'#d4b840',borderWidth:1.2,pointRadius:0,tension:0.1,order:3},
+          {label:'111DMA',data:ma111,borderColor:'#00bcd4',borderWidth:1.5,pointRadius:0,tension:0.2,order:2},
+          {label:'350DMA×2',data:ma350x2,borderColor:'#e040fb',borderWidth:1.5,borderDash:[6,3],pointRadius:0,tension:0.2,order:1}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:'index',intersect:false},
+        plugins:{
+          legend:{display:false},
+          tooltip:{
+            backgroundColor:'#111',titleColor:'#888',bodyColor:'#e2dfd6',
+            borderColor:'#333',borderWidth:1,
+            callbacks:{
+              title:ctx=>{const d=dates[ctx[0].dataIndex];return d?d.toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}):'';},
+              label:ctx=>ctx.parsed.y?ctx.dataset.label+': $'+Math.round(ctx.parsed.y).toLocaleString():null
+            }
+          },
+          annotation:{annotations}
+        },
+        scales:{
+          x:{
+            ticks:{color:'#444',font:{size:9},maxRotation:0,autoSkip:false,callback:(val,i)=>labels[i]||null},
+            grid:{color:'#1a1a1a'},border:{color:'#222'}
+          },
+          y:{
+            type:'logarithmic',
+            ticks:{
+              color:'#444',font:{size:9},
+              callback:v=>[100,1000,10000,100000].includes(v)?'$'+v.toLocaleString():null
+            },
+            grid:{color:'#1a1a1a'},border:{color:'#222'}
+          }
+        }
+      }
+    });
+  })();
+  </script>
+
   <!-- MAIN LAYOUT -->
   <div class="main-table">
 
@@ -1250,282 +1527,6 @@
     </div>
 
 
-  <!-- LIVE MARKET DASHBOARD (moved below articles for user-friendly layout) -->
-  <h2 class="section-header" id="dashboard" style="background:linear-gradient(90deg,#0066aa,#0099cc);max-width:1400px;margin:24px auto 12px;">📊 LIVE MARKET DASHBOARD 📊</h2>
-  <!-- TERMINAL (sober finance dashboard) -->
-  <section class="terminal" id="terminal">
-    <div class="terminal-bar">
-      <span class="terminal-title">▓ RR TERMINAL</span>
-      <span class="terminal-status" id="terminalStatus">● LIVE</span>
-      <span class="terminal-clock" id="terminalClock">--:--:-- UTC</span>
-    </div>
-
-    <div class="terminal-grid">
-
-      <div class="t-panel" id="panel-crypto">
-        <div class="t-panel-head">▓ CRYPTO</div>
-        <div class="t-panel-body" id="crypto-body">-- LOADING --</div>
-        <div class="t-panel-foot" id="crypto-foot">updated --:--:--</div>
-      </div>
-
-      <div class="t-panel" id="panel-stocks">
-        <div class="t-panel-head">▓ STOCKS / INDICES</div>
-        <div class="t-panel-body" id="stocks-body">-- LOADING --</div>
-        <div class="t-panel-foot" id="stocks-foot">updated --:--:--</div>
-      </div>
-
-      <div class="t-panel" id="panel-fg">
-        <div class="t-panel-head">▓ FEAR &amp; GREED</div>
-        <div class="t-panel-body" id="fg-body">-- LOADING --</div>
-        <div class="t-panel-foot" id="fg-foot">updated --:--:--</div>
-      </div>
-
-      <div class="t-panel" id="panel-market">
-        <div class="t-panel-head">▓ MARKET CAP</div>
-        <div class="t-panel-body" id="market-body">-- LOADING --</div>
-        <div class="t-panel-foot" id="market-foot">updated --:--:--</div>
-      </div>
-
-      <div class="t-panel t-panel-wide" id="panel-refs">
-        <div class="t-panel-head">▓ DEGEN ONBOARDING — GET FUNDED</div>
-        <div class="t-panel-body" id="refs-body">
-          <a class="t-ref" href="https://accounts.binance.us/register?ref=YOURCODE" target="_blank" rel="noopener">
-            <span>BINANCE.US — low-fee US exchange</span>
-            <span class="bonus">SIGN UP →</span>
-          </a>
-          <a class="t-ref" href="https://www.coinbase.com/join/YOURCODE" target="_blank" rel="noopener">
-            <span>COINBASE — easiest US onramp</span>
-            <span class="bonus">$10 BTC FREE →</span>
-          </a>
-          <a class="t-ref" href="https://www.kraken.com/?ref=YOURCODE" target="_blank" rel="noopener">
-            <span>KRAKEN — boomer-grade security</span>
-            <span class="bonus">$20 FREE →</span>
-          </a>
-          <a class="t-ref" href="https://www.gemini.com/share/YOURCODE" target="_blank" rel="noopener">
-            <span>GEMINI — Winklevoss twins' exchange</span>
-            <span class="bonus">$10 BTC FREE →</span>
-          </a>
-        </div>
-        <div class="t-panel-foot">affiliate · not financial advice</div>
-      </div>
-
-      <div class="t-panel t-panel-wide" id="panel-news">
-        <div class="t-panel-head">▓ NEWS</div>
-        <div class="t-panel-body" id="news-body">-- LOADING --</div>
-        <div class="t-panel-foot" id="news-foot">updated --:--:--</div>
-      </div>
-
-      <div class="t-panel t-panel-wide" id="panel-rekt">
-        <div class="t-panel-head">▓ RUG PULLS &amp; HACKS</div>
-        <div class="t-panel-body" id="rekt-body">-- LOADING --</div>
-        <div class="t-panel-foot" id="rekt-foot">updated --:--:--</div>
-      </div>
-
-    </div>
-  </section>
-
-  <h2 class="section-header" id="pi-cycle-heading" style="background:linear-gradient(90deg,#c0392b,#ff4400);max-width:1400px;margin:24px auto 12px;"><a href="/pi-cycle/" style="color:inherit;text-decoration:none;">📈 IS BITCOIN NEAR THE TOP? — PI CYCLE INDICATOR 📈</a></h2>
-  <div style="max-width:1400px;margin:0 auto 8px;padding:0 16px;font-family:'VT323',monospace;font-size:14px;color:#888;">Full guide and live tracker → <a href="/pi-cycle/" style="color:#ff6644;">richretards.com/pi-cycle/</a></div>
-  <!-- PI CYCLE TOP — is Bitcoin near the top? -->
-  <section class="rr-widget" id="pi-cycle" aria-label="Bitcoin Pi Cycle Top indicator">
-    <div class="rr-hdr">
-      <span class="rr-eye">Pi Cycle Top</span>
-      <span style="color:#333;font-size:10px">·</span>
-      <span class="rr-upd" id="rrUpd">fetching data...</span>
-    </div>
-
-    <h2 class="rr-phase" id="rrPhase" style="margin:0 0 12px;">—</h2>
-
-    <div class="rr-stats">
-      <div class="rr-stat"><div class="rr-sl">BTC price</div><div class="rr-sv" id="rrPrice">—</div></div>
-      <div class="rr-stat"><div class="rr-sl">111DMA</div><div class="rr-sv" id="rr111">—</div></div>
-      <div class="rr-stat"><div class="rr-sl">350DMA ×2</div><div class="rr-sv" id="rr350">—</div></div>
-      <div class="rr-stat"><div class="rr-sl">gap to top</div><div class="rr-sv" id="rrGap">—</div></div>
-      <div class="rr-stat"><div class="rr-sl">Pi tops found</div><div class="rr-sv" id="rrTops">—</div></div>
-    </div>
-
-    <div class="rr-gauge-row">
-      <div class="rr-gh"><span>proximity to top signal</span><span id="rrPct">—</span></div>
-      <div class="rr-track"><div class="rr-fill" id="rrFill"></div></div>
-      <div class="rr-ticks"><span>accumulating</span><span>building</span><span>danger</span><span>SELL</span></div>
-    </div>
-
-    <div class="rr-adv">
-      <div class="rr-atag">look retard. this means:</div>
-      <div class="rr-abody" id="rrAdvice">Loading market intelligence for degenerates...</div>
-      <div class="rr-aact" id="rrAction"></div>
-      <div class="rr-disc">not financial advice. we're all gonna make it (statistically unlikely). data via CryptoCompare.</div>
-    </div>
-
-    <div class="rr-chart-label">full cycle history (log scale)</div>
-    <div class="rr-chart-wrap">
-      <canvas id="rrChart" role="img" aria-label="Bitcoin Pi Cycle Top full history logarithmic chart">Bitcoin Pi Cycle historical chart.</canvas>
-    </div>
-    <div class="rr-legend">
-      <span><span class="rr-ld" style="background:#d4b840"></span>BTC price</span>
-      <span><span class="rr-ld" style="background:#00bcd4"></span>111DMA</span>
-      <span><span class="rr-ld" style="background:#e040fb"></span>350DMA ×2</span>
-      <span><span class="rr-ld" style="background:rgba(192,57,43,0.7)"></span>Pi Top signal</span>
-    </div>
-  </section>
-
-  <script>
-  (async()=>{
-    const $=id=>document.getElementById(id);
-    const PHASES=[
-      {max:0.5,label:'EARLY ACCUMULATION',color:'#27ae60',
-       advice:"Cycle is young. The masses are still coping that crypto is dead. Historically this is when quiet guys stack sats and touch grass. The Pi lines aren't even close to crossing.",
-       action:"→ Accumulate. DCA. Boring wins."},
-      {max:0.7,label:'MID CYCLE MOMENTUM',color:'#2980b9',
-       advice:"Things are moving. Media is warming up. Normie friends are asking questions again. We're not in mania territory — the 111DMA has a long way to catch the 350DMA×2.",
-       action:"→ Hold your bags. Stop checking every 5 minutes."},
-      {max:0.85,label:'LATE BULL — STAY ALERT',color:'#e67e22',
-       advice:"We're getting spicy. 111DMA is closing in on the 350DMA×2. Your Uber driver has crypto opinions. CNBC is bullish. These are historically not great signs for continued upside.",
-       action:"→ Consider taking some profits. Not all. Just enough so you don't cry later."},
-      {max:0.96,label:'DANGER ZONE',color:'#e74c3c',
-       advice:"The lines are almost touching. Every time this happened before, the top was days away. You'll say 'this cycle is different.' It's not different. It's never different.",
-       action:"→ Reduce exposure. Set sell orders. Do it now while you still can."},
-      {max:99,label:'TOP SIGNAL TRIGGERED',color:'#c0392b',
-       advice:"THE 111DMA HAS CROSSED THE 350DMA×2. This indicator called the top in 2013, 2017, and 2021 — all within 3 days. Whether you act is your problem.",
-       action:"→ This is not a drill. Good luck out there."}
-    ];
-
-    function sma(arr,n){
-      return arr.map((_,i)=>{
-        if(i<n-1)return null;
-        let s=0;for(let j=i-n+1;j<=i;j++)s+=arr[j];
-        return s/n;
-      });
-    }
-
-    // CryptoCompare daily history (free, no key). Free CoinGecko now caps
-    // history to 365 days, which is useless for a 350-day MA indicator.
-    // Paginate backwards via toTs to assemble multi-year history.
-    async function fetchCC(toTs){
-      const url='https://min-api.cryptocompare.com/data/v2/histoday?fsym=BTC&tsym=USD&limit=2000'+(toTs?'&toTs='+toTs:'');
-      const r=await fetch(url);
-      const j=await r.json();
-      if(j.Response!=='Success'||!j.Data?.Data) throw new Error(j.Message||'cryptocompare error');
-      return j.Data.Data.filter(d=>d.close>0).map(d=>({t:d.time*1000,v:d.close}));
-    }
-    let prices=[];
-    try{
-      const chunkA=await fetchCC();
-      const oldest=chunkA[0]?.time;
-      const chunkB=await fetchCC(chunkA[0]?.t/1000-86400).catch(()=>[]);
-      const chunkC=chunkB.length?await fetchCC(chunkB[0]?.t/1000-86400).catch(()=>[]):[];
-      const merged=[...chunkC,...chunkB,...chunkA];
-      const seen=new Set();
-      prices=merged.filter(p=>{if(seen.has(p.t))return false;seen.add(p.t);return true;});
-      $('rrUpd').textContent='live · '+new Date().toLocaleTimeString()+' · '+prices.length+' days of data';
-    }catch(e){
-      console.error('Pi Cycle fetch failed:',e);
-      $('rrUpd').textContent='api error — check console';
-    }
-
-    if(!prices.length)return;
-
-    const vals=prices.map(p=>p.v);
-    const dates=prices.map(p=>new Date(p.t));
-    const ma111=sma(vals,111);
-    const ma350x2=sma(vals,350).map(v=>v!==null?v*2:null);
-
-    const last=vals.length-1;
-    const price=vals[last],v111=ma111[last],v350=ma350x2[last];
-    const ratio=v111&&v350?v111/v350:0;
-    const pct=Math.min(ratio*100,100);
-    const gap=v350&&v111?(v350-v111)/v350*100:0;
-
-    const fmt=v=>'$'+Math.round(v).toLocaleString();
-    $('rrPrice').textContent=fmt(price);
-    $('rr111').textContent=v111?fmt(v111):'—';
-    $('rr350').textContent=v350?fmt(v350):'—';
-    $('rrGap').textContent=(gap>0?'-':'+')+Math.abs(gap).toFixed(1)+'%';
-
-    const crossovers=[];
-    for(let i=1;i<vals.length;i++){
-      if(ma111[i-1]!==null&&ma350x2[i-1]!==null&&ma111[i]!==null&&ma350x2[i]!==null){
-        if(ma111[i-1]<=ma350x2[i-1]&&ma111[i]>ma350x2[i])crossovers.push(i);
-      }
-    }
-    $('rrTops').textContent=crossovers.length;
-
-    const phase=PHASES.find(p=>ratio<=p.max)||PHASES[PHASES.length-1];
-    $('rrPhase').textContent=phase.label;
-    $('rrPhase').style.color=phase.color;
-    $('rrAdvice').textContent=phase.advice;
-    $('rrAction').textContent=phase.action;
-    $('rrAction').style.color=phase.color;
-    $('rrPct').textContent=pct.toFixed(1)+'%';
-
-    const fill=$('rrFill');
-    fill.style.background=phase.color;
-    setTimeout(()=>{fill.style.width=pct+'%';},150);
-
-    const labels=dates.map(d=>d.getMonth()===0?String(d.getFullYear()):'');
-
-    const annotations={};
-    crossovers.forEach((idx,i)=>{
-      annotations['top'+i]={
-        type:'line',xMin:idx,xMax:idx,
-        borderColor:'rgba(192,57,43,0.8)',borderWidth:1,borderDash:[5,3],
-        label:{
-          display:true,content:'Pi Top',position:'end',yAdjust:8,
-          backgroundColor:'#c0392b',color:'#fff',
-          font:{size:8,family:"'IBM Plex Mono',monospace"},
-          padding:{x:4,y:2}
-        }
-      };
-    });
-
-    // wait for deferred Chart.js (+ annotation plugin) to finish loading
-    let tries=0;
-    while(typeof window.Chart==='undefined'&&tries++<100){await new Promise(r=>setTimeout(r,50));}
-    if(typeof window.Chart==='undefined')return;
-
-    new Chart($('rrChart'),{
-      type:'line',
-      data:{
-        labels,
-        datasets:[
-          {label:'BTC Price',data:vals,borderColor:'#d4b840',borderWidth:1.2,pointRadius:0,tension:0.1,order:3},
-          {label:'111DMA',data:ma111,borderColor:'#00bcd4',borderWidth:1.5,pointRadius:0,tension:0.2,order:2},
-          {label:'350DMA×2',data:ma350x2,borderColor:'#e040fb',borderWidth:1.5,borderDash:[6,3],pointRadius:0,tension:0.2,order:1}
-        ]
-      },
-      options:{
-        responsive:true,maintainAspectRatio:false,
-        interaction:{mode:'index',intersect:false},
-        plugins:{
-          legend:{display:false},
-          tooltip:{
-            backgroundColor:'#111',titleColor:'#888',bodyColor:'#e2dfd6',
-            borderColor:'#333',borderWidth:1,
-            callbacks:{
-              title:ctx=>{const d=dates[ctx[0].dataIndex];return d?d.toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}):'';},
-              label:ctx=>ctx.parsed.y?ctx.dataset.label+': $'+Math.round(ctx.parsed.y).toLocaleString():null
-            }
-          },
-          annotation:{annotations}
-        },
-        scales:{
-          x:{
-            ticks:{color:'#444',font:{size:9},maxRotation:0,autoSkip:false,callback:(val,i)=>labels[i]||null},
-            grid:{color:'#1a1a1a'},border:{color:'#222'}
-          },
-          y:{
-            type:'logarithmic',
-            ticks:{
-              color:'#444',font:{size:9},
-              callback:v=>[100,1000,10000,100000].includes(v)?'$'+v.toLocaleString():null
-            },
-            grid:{color:'#1a1a1a'},border:{color:'#222'}
-          }
-        }
-      }
-    });
-  })();
-  </script>
 
   </div>
 
