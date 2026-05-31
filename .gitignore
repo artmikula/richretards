@@ -1,0 +1,3 @@
+# Local-only subscriber backups and secrets — never commit/deploy
+.private/
+.DS_Store
