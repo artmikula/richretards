@@ -41,6 +41,8 @@
     justify-content:space-between;padding:16px 28px;transition:background .35s, padding .35s, border-color .35s;
     border-bottom:1px solid transparent}
   nav.scrolled{background:rgba(8,8,8,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:11px 28px}
+  nav .home-link{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;white-space:nowrap}
+  nav .home-link:hover{color:var(--paper)}
   nav .brand{font-family:'Anton',sans-serif;text-transform:uppercase;font-size:19px;letter-spacing:.06em}
   nav .brand b{color:var(--gold)}
   nav .nav-cta{font-weight:700;font-size:14px;letter-spacing:.04em;text-transform:uppercase;background:var(--gold);
@@ -350,6 +352,7 @@
 
 <!-- NAV -->
 <nav id="nav">
+  <a href="https://richretards.com" class="home-link">← Rich Retards</a>
   <div class="brand">RICH WITHOUT BEING A <b>GENIUS</b></div>
   <a href="#signup" class="nav-cta">Join the Launch List</a>
 </nav>
