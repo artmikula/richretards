@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rich Without Being a Genius | Rett D. Williams</title>
-<meta name="description" content="The simple wealth system for people who don't think they're smart enough. Launching Tuesday, June 9. Join the launch list.">
+<meta name="description" content="The simple wealth system for people who don't think they're smart enough. Launching Tuesday, November 3. Join the launch list.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
@@ -346,7 +346,7 @@
 
 <!-- TOPBAR -->
 <div class="topbar">
-  Launching Tuesday, June 9
+  Launching Tuesday, November 3
   <span class="cdmini" id="cdMini"><b>00</b>d <b>00</b>h <b>00</b>m</span>
 </div>
 
@@ -558,12 +558,12 @@
   <div class="wrap">
     <div class="kicker reveal" style="justify-content:center">Get on the launch list</div>
     <h2 class="sec display reveal d1" style="text-align:center;margin:0 auto">Be first in line. <span class="gold">No genius required.</span></h2>
-    <p class="lead reveal d2" style="text-align:center;margin-left:auto;margin-right:auto">The ebook drops Tuesday, June 9. Join the launch list and get the launch day price, both bonuses below, and access before anyone else.</p>
+    <p class="lead reveal d2" style="text-align:center;margin-left:auto;margin-right:auto">The ebook drops Tuesday, November 3. Join the launch list and get the launch day price, both bonuses below, and access before anyone else.</p>
 
     <div class="offer-card reveal d2">
       <div id="offerInner">
         <div class="offer-top">
-          <div class="fmt">Ebook · Launching June 9</div>
+          <div class="fmt">Ebook · Launching November 3</div>
           <h3>Lock in the launch list perks</h3>
           <p class="pl">Free to join. You only ever get one email, the morning it goes live.</p>
           <div class="price"><span class="lbl">Launch day price</span><span class="now">$9</span><span class="was">$29</span></div>
@@ -589,14 +589,14 @@
         </form>
         <iframe name="bd-iframe" style="display:none" title="signup"></iframe>
         <div class="offer-foot">
-          <div class="micro">No spam. One email on launch day. The launch price is only for people on the list before June 9.</div>
+          <div class="micro">No spam. One email on launch day. The launch price is only for people on the list before November 3.</div>
         </div>
       </div>
 
       <div class="signup-success" id="signupSuccess">
         <div class="tick">✓</div>
         <h3>Almost there — check your inbox</h3>
-        <p>Click the confirmation email to lock in your spot. Then watch your inbox the morning of June 9 for your launch day price and both bonuses.</p>
+        <p>Click the confirmation email to lock in your spot. Then watch your inbox the morning of November 3 for your launch day price and both bonuses.</p>
       </div>
     </div>
 
@@ -613,7 +613,7 @@
     <div class="kicker reveal" style="justify-content:center">Questions</div>
     <h2 class="sec display reveal d1" style="text-align:center;margin:0 auto">Before you join the list</h2>
     <div class="faq">
-      <div class="qa reveal"><button>When does it actually launch? <span class="plus">+</span></button><div class="ans"><p>Tuesday, June 9, 2026. Everyone on the launch list gets an email the morning it goes live, plus the launch day price and both bonuses.</p></div></div>
+      <div class="qa reveal"><button>When does it actually launch? <span class="plus">+</span></button><div class="ans"><p>Tuesday, November 3, 2026. Everyone on the launch list gets an email the morning it goes live, plus the launch day price and both bonuses.</p></div></div>
       <div class="qa reveal"><button>Do I need any finance background? <span class="plus">+</span></button><div class="ans"><p>None at all. The whole book assumes you are starting from zero. If you can follow a recipe, you can follow this system.</p></div></div>
       <div class="qa reveal"><button>Is this a get rich quick scheme? <span class="plus">+</span></button><div class="ans"><p>The opposite. It is an honest, slow and steady system built on consistency over years. No day trading, no gambling, no secret hacks. Just the plain stuff that actually works.</p></div></div>
       <div class="qa reveal"><button>I barely have anything to invest. Is it still for me? <span class="plus">+</span></button><div class="ans"><p>Yes, and that is exactly who it is written for. The system is built to start small and grow as you do. Starting now with a little beats waiting until you feel ready.</p></div></div>
@@ -627,7 +627,7 @@
 <section id="final">
   <div class="wrap">
     <h2 class="display reveal">Stop waiting<br>to feel <span class="gold">smart enough.</span></h2>
-    <p class="lead reveal d1" style="margin-left:auto;margin-right:auto">The people who build wealth are not the smartest. They are the ones who started. Get on the list and start with them on June 9.</p>
+    <p class="lead reveal d1" style="margin-left:auto;margin-right:auto">The people who build wealth are not the smartest. They are the ones who started. Get on the list and start with them on November 3.</p>
     <a href="#signup" class="btn reveal d2">Join the Launch List →</a>
   </div>
 </section>
@@ -645,13 +645,33 @@
   </div>
 </footer>
 
+<!-- VIEW COUNTER -->
+<div id="view-counter" style="position:fixed;bottom:14px;right:14px;z-index:999;background:rgba(10,10,10,.85);border:1px solid var(--line);border-radius:4px;padding:6px 12px;font-size:12px;letter-spacing:.04em;color:var(--muted);opacity:0;transition:opacity .5s;pointer-events:none">
+  👁 <span id="view-count">...</span> reads
+</div>
+
 <!-- STICKY MOBILE BAR -->
 <div class="sticky-bar" id="stickyBar">
-  <div class="sp">Free to join <span>Launching June 9</span></div>
+  <div class="sp">Free to join <span>Launching November 3</span></div>
   <a href="#signup" class="btn">Join the List →</a>
 </div>
 
 <script>
+  // Real persistent view counter (counterapi.dev)
+  (async () => {
+    try {
+      const r = await fetch('https://api.counterapi.dev/v1/richretards-com-book/views/up', { method: 'GET' });
+      const j = await r.json();
+      const n = j?.count ?? j?.value;
+      if (n != null) {
+        document.getElementById('view-count').textContent = Number(n).toLocaleString();
+        const el = document.getElementById('view-counter');
+        el.style.opacity = '1';
+        el.style.pointerEvents = 'auto';
+      }
+    } catch (_) {}
+  })();
+
   const nav=document.getElementById('nav'), bar=document.getElementById('stickyBar');
   window.addEventListener('scroll',()=>{const y=window.scrollY;nav.classList.toggle('scrolled',y>40);bar.classList.toggle('show',y>700);});
 
@@ -673,7 +693,7 @@
     if(!open){qa.classList.add('open');ans.style.maxHeight=ans.scrollHeight+'px';}});});
 
   // COUNTDOWN to Tue Jun 2 2026
-  const target=new Date('2026-06-09T00:00:00').getTime();
+  const target=new Date('2026-11-03T00:00:00').getTime();
   const dd=document.getElementById('dd'),hh=document.getElementById('hh'),mm=document.getElementById('mm'),ss=document.getElementById('ss'),cdMini=document.getElementById('cdMini');
   const p2=n=>String(n).padStart(2,'0');
   function tick(){let diff=target-Date.now();if(diff<0)diff=0;
