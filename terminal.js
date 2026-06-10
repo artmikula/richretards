@@ -1,5 +1,8 @@
 // RR Terminal — vanilla JS, no build step.
-// Each widget fetches independently. A widget failure does not affect others.
+// Each widget fetches independently and keeps its last good data in
+// localStorage. Cached data renders instantly on load; if an API is down
+// the widget keeps showing the old numbers (footer flips to "stale")
+// instead of hanging on "loading".
 
 const NOW = () => new Date();
 const fmtTime = (d) => d.toISOString().slice(11, 19) + ' UTC';
@@ -10,74 +13,69 @@ const fmtNum = (n, digits = 2) => {
 const pctClass = (n) => (n > 0 ? 't-pos' : n < 0 ? 't-neg' : 't-muted');
 const pctStr  = (n) => (n > 0 ? '+' : '') + fmtNum(n, 2) + '%';
 
-async function fetchJSON(url, timeoutMs = 8000) {
+async function fetchJSON(url, timeoutMs = 8000, options = {}) {
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), timeoutMs);
   try {
-    const res = await fetch(url, { signal: ctrl.signal });
+    const res = await fetch(url, { ...options, signal: ctrl.signal });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     return await res.json();
   } finally { clearTimeout(t); }
 }
 
-async function fetchText(url, timeoutMs = 8000) {
-  const ctrl = new AbortController();
-  const t = setTimeout(() => ctrl.abort(), timeoutMs);
-  try {
-    const res = await fetch(url, { signal: ctrl.signal });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    return await res.text();
-  } finally { clearTimeout(t); }
-}
-
-async function cachedFetch(key, fetcher, ttlMs) {
+function readCache(key) {
   try {
     const raw = localStorage.getItem(key);
     if (raw) {
-      const { ts, data } = JSON.parse(raw);
-      if (Date.now() - ts < ttlMs) return data;
+      const o = JSON.parse(raw);
+      if (o && o.ts && o.data !== undefined) return o;
     }
   } catch (e) { /* ignore */ }
-  const data = await fetcher();
+  return null;
+}
+function saveCache(key, data) {
   try { localStorage.setItem(key, JSON.stringify({ ts: Date.now(), data })); } catch (e) { /* quota */ }
-  return data;
 }
 
-// CORS proxies tried in order
-const P1 = (u) => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u);
-const P2 = (u) => 'https://corsproxy.io/?url='          + encodeURIComponent(u);
-
-async function proxiedJSON(url) {
-  // Try direct (Yahoo often allows it), then two proxies
-  for (const attempt of [url, P1(url), P2(url)]) {
-    try { return await fetchJSON(attempt, 6000); } catch (_) {}
-  }
-  throw new Error('all sources failed');
-}
-
-async function proxiedText(url) {
-  for (const attempt of [P1(url), P2(url)]) {
-    try { return await fetchText(attempt, 8000); } catch (_) {}
-  }
-  throw new Error('all sources failed');
-}
-
-function setLoading(bodyId) {
-  const body = document.getElementById(bodyId);
-  if (!body || body.dataset.loaded) return;
-  body.innerHTML = '<span class="t-loading">loading</span>';
-}
-
-function setFoot(id, ok = true) {
+function setFoot(id, ok, ts) {
   const el = document.getElementById(id);
   if (!el) return;
-  el.textContent = (ok ? 'updated ' : 'stale ') + fmtTime(NOW());
+  const when = fmtTime(new Date(ts || Date.now()));
+  el.textContent = ok ? 'updated ' + when : 'stale · data from ' + when;
 }
-function setError(bodyId, footId) {
+
+// Stale-while-revalidate widget runner: paint cached data immediately,
+// refetch when past TTL, and never replace good data with an error state.
+async function runWidget({ key, ttlMs, bodyId, footId, fetcher, renderer }) {
   const body = document.getElementById(bodyId);
-  if (body) body.innerHTML = '<span class="t-err">-- DATA UNAVAILABLE --</span>';
-  setFoot(footId, false);
+  if (!body) return;
+  const cached = readCache(key);
+  if (cached) {
+    try {
+      renderer(cached.data);
+      body.dataset.loaded = '1';
+      setFoot(footId, true, cached.ts);
+    } catch (e) { /* bad cache shape — refetch below */ }
+  } else if (!body.dataset.loaded) {
+    body.innerHTML = '<span class="t-loading">loading</span>';
+  }
+  if (cached && Date.now() - cached.ts < ttlMs) return;
+  try {
+    const data = await fetcher();
+    renderer(data);
+    saveCache(key, data);
+    body.dataset.loaded = '1';
+    setFoot(footId, true, Date.now());
+  } catch (e) {
+    if (body.dataset.loaded) {
+      setFoot(footId, false, cached?.ts);
+    } else {
+      body.innerHTML = '<span class="t-err">-- DATA UNAVAILABLE --</span>';
+      setFoot(footId, false, Date.now());
+    }
+  }
 }
+
 function safeURL(u) {
   return typeof u === 'string' && /^https?:\/\//i.test(u) ? u : null;
 }
@@ -94,21 +92,6 @@ function el(tag, attrs, children) {
   return node;
 }
 
-// --- Parse RSS XML in-browser (no third-party JSON wrapper needed) ---
-function parseRSS(xmlText, src) {
-  try {
-    const doc = new DOMParser().parseFromString(xmlText, 'text/xml');
-    return Array.from(doc.querySelectorAll('item, entry')).slice(0, 8).map(item => {
-      const title = item.querySelector('title')?.textContent || '';
-      // <link> can be element text or href attribute (Atom)
-      const linkEl = item.querySelector('link');
-      const link = linkEl?.getAttribute('href') || linkEl?.textContent || '';
-      const date = item.querySelector('pubDate, published, updated')?.textContent || '';
-      return { src, title: title.trim(), link: link.trim(), date };
-    }).filter(i => i.title && i.link);
-  } catch (e) { return []; }
-}
-
 const shortAgo = (dateStr) => {
   const ms = Date.now() - new Date(dateStr).getTime();
   const m = Math.floor(ms / 60000);
@@ -119,110 +102,107 @@ const shortAgo = (dateStr) => {
 };
 
 // --- Widget: Crypto (CoinGecko — no API key, public) ---
-async function renderCrypto() {
-  setLoading('crypto-body');
-  const ids = 'bitcoin,ethereum,solana,ripple,dogecoin,cardano';
-  const url = `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`;
-  try {
-    const data = await cachedFetch('rr:crypto', () => fetchJSON(url), 60_000);
-    const rows = [
-      ['BTC',  data.bitcoin],
-      ['ETH',  data.ethereum],
-      ['SOL',  data.solana],
-      ['XRP',  data.ripple],
-      ['DOGE', data.dogecoin],
-      ['ADA',  data.cardano],
-    ].map(([sym, d]) => {
-      if (!d) return `<div class="t-row"><span class="sym">${sym}</span><span class="t-muted">--</span></div>`;
-      const chg = d.usd_24h_change;
-      return `<div class="t-row"><span class="sym">${sym}</span><span>$${fmtNum(d.usd, d.usd < 1 ? 4 : 2)} <span class="${pctClass(chg)}">${pctStr(chg)}</span></span></div>`;
-    }).join('');
-    document.getElementById('crypto-body').innerHTML = rows;
-    setFoot('crypto-foot', true);
-  } catch (e) { setError('crypto-body', 'crypto-foot'); }
+const CRYPTO_ROWS = [
+  ['BTC', 'bitcoin'], ['ETH', 'ethereum'], ['SOL', 'solana'],
+  ['XRP', 'ripple'], ['DOGE', 'dogecoin'], ['ADA', 'cardano'],
+];
+
+async function fetchCrypto() {
+  const ids = CRYPTO_ROWS.map(r => r[1]).join(',');
+  return fetchJSON(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`);
 }
 
-// --- Widget: Stocks (Yahoo Finance, multi-proxy fallback) ---
-async function renderStocks() {
-  setLoading('stocks-body');
-  const symbols = ['SPY', 'QQQ', 'NVDA', 'TSLA', 'GME', 'AMC'];
-  const fetchOne = async (sym) => {
-    const url = `https://query1.finance.yahoo.com/v8/finance/chart/${sym}?interval=1d&range=2d`;
-    const data = await proxiedJSON(url);
-    const r = data?.chart?.result?.[0];
-    if (!r) throw new Error('no result');
-    const { regularMarketPrice: price, chartPreviousClose, previousClose } = r.meta;
-    const prev = chartPreviousClose ?? previousClose ?? price;
-    const chg = prev ? ((price - prev) / prev) * 100 : 0;
-    return { sym, price, chg };
-  };
+function renderCryptoBody(data) {
+  document.getElementById('crypto-body').innerHTML = CRYPTO_ROWS.map(([sym, id]) => {
+    const d = data?.[id];
+    if (!d) return `<div class="t-row"><span class="sym">${sym}</span><span class="t-muted">--</span></div>`;
+    const chg = d.usd_24h_change;
+    return `<div class="t-row"><span class="sym">${sym}</span><span>$${fmtNum(d.usd, d.usd < 1 ? 4 : 2)} <span class="${pctClass(chg)}">${pctStr(chg)}</span></span></div>`;
+  }).join('');
+}
 
-  const results = await Promise.allSettled(symbols.map(fetchOne));
-  const anyOk = results.some(r => r.status === 'fulfilled');
-  if (!anyOk) { setError('stocks-body', 'stocks-foot'); return; }
+// --- Widget: Stocks (TradingView scanner — no key, CORS enabled) ---
+// Yahoo Finance blocks browser CORS and the public proxies died, so the
+// old multi-proxy approach is gone.
+const STOCK_SYMBOLS = [
+  ['AMEX:SPY', 'SPY'], ['NASDAQ:QQQ', 'QQQ'], ['NASDAQ:NVDA', 'NVDA'],
+  ['NASDAQ:TSLA', 'TSLA'], ['NYSE:GME', 'GME'], ['NYSE:AMC', 'AMC'],
+];
 
-  document.getElementById('stocks-body').innerHTML = results.map((res, i) => {
-    const sym = symbols[i];
-    if (res.status !== 'fulfilled') return `<div class="t-row"><span class="sym">${sym}</span><span class="t-muted">--</span></div>`;
-    const { price, chg } = res.value;
+async function fetchStocks() {
+  // no Content-Type header: keeps this a simple request (no CORS preflight),
+  // which TradingView's scanner requires
+  const j = await fetchJSON('https://scanner.tradingview.com/america/scan', 8000, {
+    method: 'POST',
+    body: JSON.stringify({
+      symbols: { tickers: STOCK_SYMBOLS.map(s => s[0]), query: { types: [] } },
+      columns: ['name', 'close', 'change'],
+    }),
+  });
+  if (!Array.isArray(j?.data) || j.data.length === 0) throw new Error('no data');
+  const bySym = {};
+  j.data.forEach(r => { bySym[r.s] = { price: r.d?.[1], chg: r.d?.[2] }; });
+  return STOCK_SYMBOLS.map(([tv, sym]) => ({ sym, ...(bySym[tv] || {}) }));
+}
+
+function renderStocksBody(rows) {
+  document.getElementById('stocks-body').innerHTML = rows.map(({ sym, price, chg }) => {
+    if (price == null) return `<div class="t-row"><span class="sym">${sym}</span><span class="t-muted">--</span></div>`;
     return `<div class="t-row"><span class="sym">${sym}</span><span>$${fmtNum(price, 2)} <span class="${pctClass(chg)}">${pctStr(chg)}</span></span></div>`;
   }).join('');
-  setFoot('stocks-foot', true);
 }
 
 // --- Widget: Fear & Greed (alternative.me — no API key) ---
-async function renderFG() {
-  setLoading('fg-body');
-  try {
-    const data = await fetchJSON('https://api.alternative.me/fng/?limit=1');
-    const item = data?.data?.[0];
-    if (!item) throw new Error('no data');
-    const v = parseInt(item.value, 10);
-    if (Number.isNaN(v)) throw new Error('bad value');
-    const rawLabel = String(item.value_classification || '').toUpperCase();
-    const colorMap = { 'EXTREME FEAR': '#ff3b3b', 'FEAR': '#ff8a00', 'NEUTRAL': '#cccccc', 'GREED': '#9ad929', 'EXTREME GREED': '#00d084' };
-    const label = colorMap[rawLabel] ? rawLabel : 'NEUTRAL';
-    const color = colorMap[label];
-    const bar = '█'.repeat(Math.max(0, Math.min(10, Math.round(v / 10)))) + '░'.repeat(10 - Math.max(0, Math.min(10, Math.round(v / 10))));
-    const body = document.getElementById('fg-body');
-    body.innerHTML = '';
-    body.appendChild(el('div', { style: `text-align:center;font-size:2rem;color:${color};line-height:1.1;` }, String(v)));
-    body.appendChild(el('div', { style: `text-align:center;color:${color};letter-spacing:1px;font-size:0.85rem;` }, label));
-    body.appendChild(el('div', { style: `text-align:center;color:${color};margin-top:6px;font-family:monospace;` }, bar));
-    body.appendChild(el('div', { style: 'text-align:center;color:#555;font-size:0.7rem;margin-top:4px;' }, 'crypto · alternative.me'));
-    setFoot('fg-foot', true);
-  } catch (e) { setError('fg-body', 'fg-foot'); }
+async function fetchFG() {
+  const data = await fetchJSON('https://api.alternative.me/fng/?limit=1');
+  const item = data?.data?.[0];
+  if (!item) throw new Error('no data');
+  const v = parseInt(item.value, 10);
+  if (Number.isNaN(v)) throw new Error('bad value');
+  return { value: v, label: String(item.value_classification || '') };
+}
+
+function renderFGBody({ value: v, label: rawLabel }) {
+  const colorMap = { 'EXTREME FEAR': '#ff3b3b', 'FEAR': '#ff8a00', 'NEUTRAL': '#cccccc', 'GREED': '#9ad929', 'EXTREME GREED': '#00d084' };
+  const label = colorMap[rawLabel.toUpperCase()] ? rawLabel.toUpperCase() : 'NEUTRAL';
+  const color = colorMap[label];
+  const filled = Math.max(0, Math.min(10, Math.round(v / 10)));
+  const bar = '█'.repeat(filled) + '░'.repeat(10 - filled);
+  const body = document.getElementById('fg-body');
+  body.innerHTML = '';
+  body.appendChild(el('div', { style: `text-align:center;font-size:2rem;color:${color};line-height:1.1;` }, String(v)));
+  body.appendChild(el('div', { style: `text-align:center;color:${color};letter-spacing:1px;font-size:0.85rem;` }, label));
+  body.appendChild(el('div', { style: `text-align:center;color:${color};margin-top:6px;font-family:monospace;` }, bar));
+  body.appendChild(el('div', { style: 'text-align:center;color:#555;font-size:0.7rem;margin-top:4px;' }, 'crypto · alternative.me'));
 }
 
 // --- Widget: BTC Dominance + Global Market Cap (CoinGecko /global — no key) ---
-async function renderMarket() {
-  setLoading('market-body');
-  try {
-    const data = await cachedFetch('rr:global', () => fetchJSON('https://api.coingecko.com/api/v3/global'), 5 * 60_000);
-    const g = data?.data;
-    if (!g) throw new Error('no data');
+async function fetchMarket() {
+  const data = await fetchJSON('https://api.coingecko.com/api/v3/global');
+  if (!data?.data) throw new Error('no data');
+  return data;
+}
 
-    const mcap    = g.total_market_cap?.usd ?? 0;
-    const mcapChg = g.market_cap_change_percentage_24h_usd ?? 0;
-    const btcDom  = g.market_cap_percentage?.btc ?? 0;
-    const ethDom  = g.market_cap_percentage?.eth ?? 0;
-    const coins   = g.active_cryptocurrencies ?? 0;
+function renderMarketBody(data) {
+  const g = data.data;
+  const mcap    = g.total_market_cap?.usd ?? 0;
+  const mcapChg = g.market_cap_change_percentage_24h_usd ?? 0;
+  const btcDom  = g.market_cap_percentage?.btc ?? 0;
+  const ethDom  = g.market_cap_percentage?.eth ?? 0;
+  const coins   = g.active_cryptocurrencies ?? 0;
 
-    const fmt$ = (n) => {
-      if (n >= 1e12) return '$' + fmtNum(n / 1e12, 2) + 'T';
-      if (n >= 1e9)  return '$' + fmtNum(n / 1e9,  2) + 'B';
-      return '$' + fmtNum(n, 0);
-    };
+  const fmt$ = (n) => {
+    if (n >= 1e12) return '$' + fmtNum(n / 1e12, 2) + 'T';
+    if (n >= 1e9)  return '$' + fmtNum(n / 1e9,  2) + 'B';
+    return '$' + fmtNum(n, 0);
+  };
 
-    const body = document.getElementById('market-body');
-    body.innerHTML = [
-      `<div class="t-row"><span class="sym">TOTAL MCAP</span><span class="${pctClass(mcapChg)}">${fmt$(mcap)} <small>${pctStr(mcapChg)}</small></span></div>`,
-      `<div class="t-row"><span class="sym">BTC DOM</span><span>${fmtNum(btcDom, 1)}%</span></div>`,
-      `<div class="t-row"><span class="sym">ETH DOM</span><span>${fmtNum(ethDom, 1)}%</span></div>`,
-      `<div class="t-row"><span class="sym">COINS</span><span class="t-muted">${coins.toLocaleString()}</span></div>`,
-    ].join('');
-    setFoot('market-foot', true);
-  } catch (e) { setError('market-body', 'market-foot'); }
+  document.getElementById('market-body').innerHTML = [
+    `<div class="t-row"><span class="sym">TOTAL MCAP</span><span class="${pctClass(mcapChg)}">${fmt$(mcap)} <small>${pctStr(mcapChg)}</small></span></div>`,
+    `<div class="t-row"><span class="sym">BTC DOM</span><span>${fmtNum(btcDom, 1)}%</span></div>`,
+    `<div class="t-row"><span class="sym">ETH DOM</span><span>${fmtNum(ethDom, 1)}%</span></div>`,
+    `<div class="t-row"><span class="sym">COINS</span><span class="t-muted">${coins.toLocaleString()}</span></div>`,
+  ].join('');
 }
 
 // --- Fetch any RSS feed as JSON via rss2json (handles CORS + parsing) ---
@@ -239,56 +219,52 @@ async function fetchFeedJSON(url, src) {
 }
 
 // --- Widget: News (RSS feeds via rss2json) ---
-async function renderNews() {
-  setLoading('news-body');
+async function fetchNews() {
   const feeds = [
     { src: 'CT',    url: 'https://cointelegraph.com/rss' },
     { src: 'CD',    url: 'https://www.coindesk.com/arc/outboundfeeds/rss/' },
     { src: 'WSB',   url: 'https://www.reddit.com/r/wallstreetbets/.rss' },
   ];
-  try {
-    const results = await Promise.allSettled(feeds.map(f =>
-      cachedFetch('rr:news4:' + f.src, () => fetchFeedJSON(f.url, f.src), 30 * 60_000)
-    ));
-    const items = results.flatMap(r => r.status === 'fulfilled' ? r.value : []);
-    if (items.length === 0) throw new Error('no items');
-    items.sort((a, b) => new Date(b.date) - new Date(a.date));
-    const body = document.getElementById('news-body');
-    body.innerHTML = '';
-    items.slice(0, 12).forEach(it => {
-      const href = safeURL(it.link);
-      if (!href) return;
-      body.appendChild(el('a', { class: 't-newsitem', href, target: '_blank', rel: 'noopener noreferrer' }, [
-        el('span', { class: 'src' }, it.src),
-        ' ' + String(it.title).slice(0, 120) + ' ',
-        el('span', { class: 'when' }, shortAgo(it.date)),
-      ]));
-    });
-    setFoot('news-foot', true);
-  } catch (e) { setError('news-body', 'news-foot'); }
+  const results = await Promise.allSettled(feeds.map(f => fetchFeedJSON(f.url, f.src)));
+  const items = results.flatMap(r => r.status === 'fulfilled' ? r.value : []);
+  if (items.length === 0) throw new Error('no items');
+  items.sort((a, b) => new Date(b.date) - new Date(a.date));
+  return items.slice(0, 12);
+}
+
+function renderNewsBody(items) {
+  const body = document.getElementById('news-body');
+  body.innerHTML = '';
+  items.forEach(it => {
+    const href = safeURL(it.link);
+    if (!href) return;
+    body.appendChild(el('a', { class: 't-newsitem', href, target: '_blank', rel: 'noopener noreferrer' }, [
+      el('span', { class: 'src' }, it.src),
+      ' ' + String(it.title).slice(0, 120) + ' ',
+      el('span', { class: 'when' }, shortAgo(it.date)),
+    ]));
+  });
 }
 
 // --- Widget: Rug Pulls & Hacks (rekt.news RSS) ---
-async function renderRekt() {
-  setLoading('rekt-body');
-  const url = 'https://rekt.news/rss/feed.xml';
-  try {
-    const items = await cachedFetch('rr:rekt3', () => fetchFeedJSON(url, 'REKT'), 30 * 60_000);
-    if (items.length === 0) throw new Error('no items');
-    const body = document.getElementById('rekt-body');
-    body.innerHTML = '';
-    items.slice(0, 8).forEach(it => {
-      const href = safeURL(it.link);
-      if (!href) return;
-      const ago = shortAgo(it.date);
-      body.appendChild(el('a', { class: 't-newsitem', href, target: '_blank', rel: 'noopener noreferrer' }, [
-        el('span', { class: 'src' }, 'REKT'),
-        ' ' + String(it.title).slice(0, 120) + ' ',
-        el('span', { class: 'when' }, ago),
-      ]));
-    });
-    setFoot('rekt-foot', true);
-  } catch (e) { setError('rekt-body', 'rekt-foot'); }
+async function fetchRekt() {
+  const items = await fetchFeedJSON('https://rekt.news/rss/feed.xml', 'REKT');
+  if (items.length === 0) throw new Error('no items');
+  return items.slice(0, 8);
+}
+
+function renderRektBody(items) {
+  const body = document.getElementById('rekt-body');
+  body.innerHTML = '';
+  items.forEach(it => {
+    const href = safeURL(it.link);
+    if (!href) return;
+    body.appendChild(el('a', { class: 't-newsitem', href, target: '_blank', rel: 'noopener noreferrer' }, [
+      el('span', { class: 'src' }, 'REKT'),
+      ' ' + String(it.title).slice(0, 120) + ' ',
+      el('span', { class: 'when' }, shortAgo(it.date)),
+    ]));
+  });
 }
 
 // --- Clock ---
@@ -298,27 +274,22 @@ function renderClock() {
 }
 
 // --- Init ---
+const WIDGETS = [
+  { key: 'rr:crypto2', ttlMs: 60_000,      bodyId: 'crypto-body', footId: 'crypto-foot', fetcher: fetchCrypto, renderer: renderCryptoBody, intervalMs: 60_000 },
+  { key: 'rr:stocks2', ttlMs: 60_000,      bodyId: 'stocks-body', footId: 'stocks-foot', fetcher: fetchStocks, renderer: renderStocksBody, intervalMs: 60_000 },
+  { key: 'rr:fng2',    ttlMs: 5 * 60_000,  bodyId: 'fg-body',     footId: 'fg-foot',     fetcher: fetchFG,     renderer: renderFGBody,     intervalMs: 5 * 60_000 },
+  { key: 'rr:global2', ttlMs: 5 * 60_000,  bodyId: 'market-body', footId: 'market-foot', fetcher: fetchMarket, renderer: renderMarketBody, intervalMs: 5 * 60_000 },
+  { key: 'rr:news5',   ttlMs: 30 * 60_000, bodyId: 'news-body',   footId: 'news-foot',   fetcher: fetchNews,   renderer: renderNewsBody,   intervalMs: 30 * 60_000 },
+  { key: 'rr:rekt4',   ttlMs: 30 * 60_000, bodyId: 'rekt-body',   footId: 'rekt-foot',   fetcher: fetchRekt,   renderer: renderRektBody,   intervalMs: 30 * 60_000 },
+];
+
 function init() {
   renderClock();
   setInterval(renderClock, 1000);
-
-  renderCrypto();
-  setInterval(renderCrypto, 60_000);
-
-  renderStocks();
-  setInterval(renderStocks, 60_000);
-
-  renderFG();
-  setInterval(renderFG, 5 * 60_000);
-
-  renderMarket();
-  setInterval(renderMarket, 5 * 60_000);
-
-  renderNews();
-  setInterval(renderNews, 30 * 60_000);
-
-  renderRekt();
-  setInterval(renderRekt, 30 * 60_000);
+  WIDGETS.forEach(w => {
+    runWidget(w);
+    setInterval(() => runWidget(w), w.intervalMs);
+  });
 }
 
 if (document.readyState === 'loading') {

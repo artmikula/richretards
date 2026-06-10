@@ -965,7 +965,7 @@
       <div class="rr-atag">look retard. this means:</div>
       <div class="rr-abody" id="rrAdvice">Loading market intelligence for degenerates...</div>
       <div class="rr-aact" id="rrAction"></div>
-      <div class="rr-disc">not financial advice. we're all gonna make it (statistically unlikely). data via CryptoCompare.</div>
+      <div class="rr-disc">not financial advice. we're all gonna make it (statistically unlikely). data via blockchain.info.</div>
     </div>
 
     <div class="rr-chart-label">full cycle history (log scale)</div>
@@ -1009,28 +1009,39 @@
       });
     }
 
-    // CryptoCompare daily history (free, no key). Free CoinGecko now caps
-    // history to 365 days, which is useless for a 350-day MA indicator.
-    // Paginate backwards via toTs to assemble multi-year history.
-    async function fetchCC(toTs){
-      const url='https://min-api.cryptocompare.com/data/v2/histoday?fsym=BTC&tsym=USD&limit=2000'+(toTs?'&toTs='+toTs:'');
-      const r=await fetch(url);
+    // BTC daily history via blockchain.info (free, CORS enabled, data since
+    // 2009). CryptoCompare killed keyless access. Last good data is kept in
+    // localStorage and served whenever the API is down.
+    const HK='rr:btc-hist:v1';
+    async function fetchHistory(){
+      const r=await fetch('https://api.blockchain.info/charts/market-price?timespan=all&format=json&cors=true&sampled=false');
       const j=await r.json();
-      if(j.Response!=='Success'||!j.Data?.Data) throw new Error(j.Message||'cryptocompare error');
-      return j.Data.Data.filter(d=>d.close>0).map(d=>({t:d.time*1000,v:d.close}));
+      if(!Array.isArray(j?.values)||j.values.length<1000) throw new Error('blockchain.info error');
+      return j.values.filter(d=>d.y>0).map(d=>({t:d.x*1000,v:d.y}));
     }
-    let prices=[];
+    let prices=[],cachedHist=null,live=false;
+    try{cachedHist=JSON.parse(localStorage.getItem(HK));}catch(e){}
+    if(cachedHist?.data?.length&&Date.now()-cachedHist.ts<6*3600*1000){
+      prices=cachedHist.data;live=true;
+    }else{
+      try{
+        prices=await fetchHistory();
+        live=true;
+        try{localStorage.setItem(HK,JSON.stringify({ts:Date.now(),data:prices}));}catch(e){}
+      }catch(e){
+        console.error('Pi Cycle fetch failed:',e);
+        if(cachedHist?.data?.length)prices=cachedHist.data;
+      }
+    }
+    // blockchain.info lags a few days; top off with live spot price
     try{
-      const chunkA=await fetchCC();
-      const oldest=chunkA[0]?.time;
-      const chunkB=await fetchCC(chunkA[0]?.t/1000-86400).catch(()=>[]);
-      const chunkC=chunkB.length?await fetchCC(chunkB[0]?.t/1000-86400).catch(()=>[]):[];
-      const merged=[...chunkC,...chunkB,...chunkA];
-      const seen=new Set();
-      prices=merged.filter(p=>{if(seen.has(p.t))return false;seen.add(p.t);return true;});
-      $('rrUpd').textContent='live · '+new Date().toLocaleTimeString()+' · '+prices.length+' days of data';
-    }catch(e){
-      console.error('Pi Cycle fetch failed:',e);
+      const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+      const spot=(await r.json())?.bitcoin?.usd;
+      if(spot&&prices.length&&Date.now()-prices[prices.length-1].t>12*3600*1000)prices=[...prices,{t:Date.now(),v:spot}];
+    }catch(e){}
+    if(prices.length){
+      $('rrUpd').textContent=(live?'live · ':'cached · ')+new Date().toLocaleTimeString()+' · '+prices.length+' days of data';
+    }else{
       $('rrUpd').textContent='api error — check console';
     }
 
