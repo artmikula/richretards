@@ -668,6 +668,7 @@
       }
       .sidebar { display: none; }
       .header h1 { font-size: 3rem; }
+      .main-content { min-width: 0; padding: 16px 12px; }
     }
 
     /* === RR TERMINAL (sober) === */
@@ -780,7 +781,24 @@
     @media (max-width: 600px) {
       .terminal-grid { grid-template-columns: 1fr; }
       .t-panel-wide { grid-column: span 1; }
+      .terminal { padding: 12px 12px 14px; }
+      .terminal-bar { font-size: 0.7rem; flex-wrap: wrap; gap: 4px; }
+      .section-header { font-size: 1.3rem; padding: 10px 12px; letter-spacing: 1px; word-break: break-word; }
+      .header h1 { letter-spacing: 1px; word-break: break-word; }
+      .header { padding: 16px 12px; }
+      .header .subtitle { word-break: break-word; }
+      .stats-bar { padding: 12px 10px; gap: 6px; }
+      .stat-item .num { font-size: 1.1rem; }
+      .newsletter-box { padding: 24px 16px; }
+      .newsletter-box h2 { font-size: 1.8rem; }
+      .ad-banner { font-size: 1rem; padding: 10px 12px; }
+      .post-grid { grid-template-columns: 1fr; }
+      .t-ref { gap: 8px; }
+      .t-ref > span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+      .t-ref .bonus { flex-shrink: 0; white-space: nowrap; }
     }
+    .t-ref { min-width: 0; }
+    .t-ref > span:first-child { min-width: 0; }
 
     /* === PI CYCLE TOP WIDGET === */
     .rr-widget{
@@ -1243,6 +1261,30 @@
       <!-- BREAKING / LATEST ARTICLES — auto-articles get inserted here -->
       <h2 class="section-header" id="latest" style="background:linear-gradient(90deg,#ff0000,#ff4400);animation:adFlash 1.5s ease-in-out infinite alternate;">🔴 BREAKING — LATEST ARTICLES 🔴</h2>
             <div class="post-grid" id="latest-articles">
+        <div class="post-card" style="border-color:#ff0000;box-shadow:0 0 15px rgba(255,0,0,0.3);">
+          <span class="tag tag-scam" style="background:#ff0000;animation:blink 1s infinite;">🔴 NEW</span>
+          <h3>The AI Trading Bot Scam: How "30% a Month" Steals Billions</h3>
+          <p>The hottest crypto scam of 2026 wears a machine learning sticker. Same fake dashboard, same vanishing money. Here's exactly how it works and how to spot it.</p>
+          <a href="/scams/ai-trading-bot-scam/" class="read-more">&gt;&gt;&gt; READ MORE &lt;&lt;&lt;</a>
+        </div>
+        <div class="post-card" style="border-color:#ff0000;box-shadow:0 0 15px rgba(255,0,0,0.3);">
+          <span class="tag tag-scam" style="background:#ff0000;animation:blink 1s infinite;">🔴 NEW</span>
+          <h3>Pig Butchering: The Romance Scam That Drains Your Whole Account</h3>
+          <p>The biggest fraud category on earth. The love of your life is a call center, and the fake crypto app eats everything. Learn the red flags before it's you.</p>
+          <a href="/scams/pig-butchering-scam/" class="read-more">&gt;&gt;&gt; READ MORE &lt;&lt;&lt;</a>
+        </div>
+        <div class="post-card" style="border-color:#ff6600;">
+          <span class="tag tag-fail">📉 NEW</span>
+          <h3>Prediction Markets Are Just Gambling With Extra Steps</h3>
+          <p>Polymarket and Kalshi made betting on the news feel like investing. It isn't. Here's why the house still wins and who's getting wrecked.</p>
+          <a href="/fails/prediction-market-gambling/" class="read-more">&gt;&gt;&gt; READ MORE &lt;&lt;&lt;</a>
+        </div>
+        <div class="post-card" style="border-color:#ffff00;">
+          <span class="tag tag-wisdom">🧠 NEW</span>
+          <h3>Buy Now Pay Later Is a Debt Trap. Here's How They Get You.</h3>
+          <p>"4 easy payments" is engineered to make you spend more than you can afford. How Klarna and Affirm work on your brain, and how to use them without getting wrecked.</p>
+          <a href="/wisdom/buy-now-pay-later-trap/" class="read-more">&gt;&gt;&gt; READ MORE &lt;&lt;&lt;</a>
+        </div>
         <div class="post-card" style="border-color:#ff0000;box-shadow:0 0 15px rgba(255,0,0,0.3);">
           <span class="tag tag-fail" style="background:#ff0000;animation:blink 1s infinite;">🔴 NEW</span>
           <h3>GRASS is DYING — Here's What Rich Retards Should Buy Instead</h3>
