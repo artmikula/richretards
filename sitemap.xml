@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://richretards.com/</loc><lastmod>2026-06-29</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>
+  <url><loc>https://richretards.com/</loc><lastmod>2026-07-06</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>
   <url><loc>https://richretards.com/pi-cycle/</loc><lastmod>2026-05-28</lastmod><changefreq>daily</changefreq><priority>0.95</priority></url>
   <url><loc>https://richretards.com/about/</loc><lastmod>2026-03-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://richretards.com/newsletter/</loc><lastmod>2026-03-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
@@ -10,14 +10,15 @@
   <url><loc>https://richretards.com/book/</loc><lastmod>2026-06-10</lastmod><changefreq>weekly</changefreq><priority>0.95</priority></url>
   <!-- Category Index Pages -->
   <url><loc>https://richretards.com/reviews/</loc><lastmod>2026-06-29</lastmod><changefreq>weekly</changefreq><priority>0.95</priority></url>
-  <url><loc>https://richretards.com/scams/</loc><lastmod>2026-06-29</lastmod><changefreq>weekly</changefreq><priority>0.95</priority></url>
+  <url><loc>https://richretards.com/scams/</loc><lastmod>2026-07-06</lastmod><changefreq>weekly</changefreq><priority>0.95</priority></url>
   <url><loc>https://richretards.com/fails/</loc><lastmod>2026-06-10</lastmod><changefreq>weekly</changefreq><priority>0.95</priority></url>
-  <url><loc>https://richretards.com/wisdom/</loc><lastmod>2026-06-06</lastmod><changefreq>weekly</changefreq><priority>0.95</priority></url>
+  <url><loc>https://richretards.com/wisdom/</loc><lastmod>2026-07-06</lastmod><changefreq>weekly</changefreq><priority>0.95</priority></url>
   <!-- Reviews -->
   <url><loc>https://richretards.com/reviews/fineprint-review/</loc><lastmod>2026-06-29</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://richretards.com/reviews/robinhood-review/</loc><lastmod>2026-06-29</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://richretards.com/reviews/acorns-review/</loc><lastmod>2026-06-29</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <!-- Scam Alerts -->
+  <url><loc>https://richretards.com/scams/ai-romance-scam-compounds/</loc><lastmod>2026-07-06</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://richretards.com/scams/task-scam/</loc><lastmod>2026-06-29</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://richretards.com/scams/crypto-recovery-scam/</loc><lastmod>2026-06-29</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://richretards.com/scams/ai-trading-bot-scam/</loc><lastmod>2026-06-16</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
@@ -40,6 +41,8 @@
   <url><loc>https://richretards.com/fails/crypto-crash-2025/</loc><lastmod>2026-04-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://richretards.com/fails/grass-token-dying-render-sol-tao-hype-crypto-portfolio/</loc><lastmod>2026-04-22</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <!-- Money Wisdom -->
+  <url><loc>https://richretards.com/wisdom/rent-now-pay-later/</loc><lastmod>2026-07-06</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://richretards.com/wisdom/bnpl-new-rules/</loc><lastmod>2026-07-06</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://richretards.com/wisdom/buy-now-pay-later-trap/</loc><lastmod>2026-06-06</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://richretards.com/wisdom/spot-ponzi-scheme/</loc><lastmod>2026-05-25</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://richretards.com/wisdom/emergency-fund-rule/</loc><lastmod>2026-05-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
