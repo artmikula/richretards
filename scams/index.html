@@ -54,13 +54,18 @@
     .page-header { max-width: 900px; margin: 40px auto 0; padding: 0 20px; }
     .page-header h1 { font-family: 'Bangers', cursive; font-size: clamp(2.5rem, 6vw, 4rem); color: #ffff00; text-shadow: 3px 3px 0 #ff0000; margin-bottom: 12px; }
     .page-header p { color: #888; font-size: 1.05rem; line-height: 1.7; max-width: 700px; }
-    .article-grid { max-width: 900px; margin: 30px auto 40px; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 20px; }
+    .article-grid { max-width: 900px; margin: 30px auto 40px; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(380px, 100%), 1fr)); gap: 20px; }
     .article-card { background: #0a0a0a; border: 2px solid #1a1a1a; padding: 24px; text-decoration: none; display: block; transition: all 0.2s; }
     .article-card:hover { border-color: #ff0000; box-shadow: 0 0 20px rgba(255,0,0,0.2); }
     .article-card .tag { font-family: 'Press Start 2P', monospace; font-size: 0.45rem; padding: 3px 8px; background: #cc0000; color: #fff; display: inline-block; margin-bottom: 12px; }
     .article-card h2 { font-family: 'Bangers', cursive; font-size: 1.4rem; color: #fff; line-height: 1.2; margin-bottom: 10px; }
     .article-card p { color: #666; font-size: 0.9rem; line-height: 1.6; margin-bottom: 14px; }
     .article-card .meta { font-family: 'VT323', monospace; color: #444; font-size: 0.95rem; }
+    @media (max-width: 520px) {
+      .page-header { padding: 0 14px; margin-top: 30px; }
+      .article-grid { padding: 0 14px; gap: 14px; }
+      .article-card { padding: 18px; }
+    }
   </style>
 </head>
 <body>

@@ -337,7 +337,7 @@
     .hero-grid{grid-template-columns:1fr;gap:40px}
     .book-stage{order:-1}
     .book{width:min(260px,60%);transform:rotateY(-14deg)}
-    .lie-grid,.foryou-grid,.author-grid,.proof-body,.kgrid{grid-template-columns:1fr}
+    .lie-grid,.foryou-grid,.author-grid,.proof-body,.kgrid{grid-template-columns:minmax(0,1fr)}
     .pcol:first-child{border-right:none;border-bottom:1px solid rgba(0,0,0,.08)}
     .learn-grid,.tgrid{grid-template-columns:1fr}
     .author-photo{max-width:360px;margin:0 auto}
@@ -358,7 +358,7 @@
     .eyebrow{display:block;line-height:1.7}
     .eyebrow .dot{display:inline-block;margin-right:9px}
     .hero-cta-row .btn{width:100%;justify-content:center}
-    .countdown{gap:9px}
+    .countdown{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
     .cd-unit{min-width:0;flex:1;padding:10px 4px}
     .cd-unit b{font-size:30px}
     .book-badge{width:84px;height:84px;right:-6px;top:-14px;font-size:11px}
@@ -369,15 +369,18 @@
     .lcard{padding:24px 20px}
     .kcard{padding:24px 20px}
     .tcard{padding:24px 20px}
+    .learn-grid,.kgrid,.tgrid{gap:14px}
     .foryou-grid,.author-grid{gap:36px}
     .pull{padding-left:18px}
     .offer-top{padding:30px 20px 0}
     .offer-top .pl{font-size:16px}
     .bonuses{padding:20px 20px 6px;gap:12px}
-    .bonus{padding:14px;gap:12px;flex-wrap:wrap}
+    .bonus{display:grid;grid-template-columns:40px minmax(0,1fr);padding:14px;gap:12px}
     .bonus .gift{flex-basis:40px;height:40px}
     .bonus .bx{flex:1 1 60%;min-width:0}
+    .bonus .val{grid-column:2;margin-left:0;text-align:left}
     .signup-form{padding:20px 20px 8px}
+    .signup-form input,.signup-form .btn{width:100%;min-width:0}
     .signup-success{padding:36px 20px}
     .offer-foot{padding:6px 20px 32px}
     .proof-head{flex-direction:column;align-items:flex-start;gap:6px;padding:24px 20px}
@@ -717,7 +720,19 @@
   "datePublished": "2026-11-03",
   "url": "https://richretards.com/book/",
   "image": "https://richretards.com/book/cover.jpg",
-  "description": "The simple wealth system for people who don't think they're smart enough."
+  "description": "The simple wealth system for people who don't think they're smart enough.",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5",
+    "bestRating": "5",
+    "worstRating": "1",
+    "reviewCount": "3"
+  },
+  "review": [
+    {"@type": "Review", "author": {"@type": "Person", "name": "Maria K."}, "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5"}, "reviewBody": "For the first time, money advice did not make me feel stupid. I set up everything from the account chapter the same weekend."},
+    {"@type": "Review", "author": {"@type": "Person", "name": "James R."}, "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5"}, "reviewBody": "I avoided investing for ten years because I thought I had to understand the market first. Turns out I just needed this book."},
+    {"@type": "Review", "author": {"@type": "Person", "name": "Dana L."}, "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5"}, "reviewBody": "No hype and no get rich quick nonsense. Just a plan that finally made sense. I already bought a copy for my sister."}
+  ]
 }
 </script>
 <script type="application/ld+json">

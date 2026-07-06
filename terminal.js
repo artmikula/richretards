@@ -37,6 +37,40 @@ function saveCache(key, data) {
   try { localStorage.setItem(key, JSON.stringify({ ts: Date.now(), data })); } catch (e) { /* quota */ }
 }
 
+function renderSafely(body, renderer, data) {
+  const previousHTML = body.innerHTML;
+  try {
+    renderer(data);
+    if (!body.innerHTML.trim()) throw new Error('empty render');
+    body.dataset.loaded = '1';
+    return true;
+  } catch (e) {
+    body.innerHTML = previousHTML;
+    return false;
+  }
+}
+
+function mergeObjectData(next, previous) {
+  if (!previous || !next || typeof next !== 'object' || Array.isArray(next)) return next;
+  return { ...previous, ...next };
+}
+
+function mergeRowsByKey(rowKey, requiredKeys = []) {
+  return (nextRows, previousRows) => {
+    if (!Array.isArray(nextRows) || !Array.isArray(previousRows)) return nextRows;
+    const previousByKey = new Map(previousRows.map(row => [row?.[rowKey], row]));
+    return nextRows.map(row => {
+      const key = row?.[rowKey];
+      const previous = previousByKey.get(key);
+      if (!previous) return row;
+      const hasAllRequired = requiredKeys.every(k => row?.[k] !== null && row?.[k] !== undefined && !Number.isNaN(row?.[k]));
+      if (hasAllRequired) return row;
+      const definedNext = Object.fromEntries(Object.entries(row).filter(([, value]) => value !== undefined && value !== null));
+      return { ...previous, ...definedNext };
+    });
+  };
+}
+
 function setFoot(id, ok, ts) {
   const el = document.getElementById(id);
   if (!el) return;
@@ -46,26 +80,29 @@ function setFoot(id, ok, ts) {
 
 // Stale-while-revalidate widget runner: paint cached data immediately,
 // refetch when past TTL, and never replace good data with an error state.
-async function runWidget({ key, ttlMs, bodyId, footId, fetcher, renderer }) {
+async function runWidget({ key, ttlMs, bodyId, footId, fetcher, renderer, mergeData }) {
   const body = document.getElementById(bodyId);
   if (!body) return;
   const cached = readCache(key);
   if (cached) {
-    try {
-      renderer(cached.data);
-      body.dataset.loaded = '1';
+    if (renderSafely(body, renderer, cached.data)) {
       setFoot(footId, true, cached.ts);
-    } catch (e) { /* bad cache shape — refetch below */ }
+    }
   } else if (!body.dataset.loaded) {
     body.innerHTML = '<span class="t-loading">loading</span>';
   }
   if (cached && Date.now() - cached.ts < ttlMs) return;
+  if (body.dataset.fetching === '1') return;
+  body.dataset.fetching = '1';
   try {
     const data = await fetcher();
-    renderer(data);
-    saveCache(key, data);
-    body.dataset.loaded = '1';
-    setFoot(footId, true, Date.now());
+    const nextData = mergeData ? mergeData(data, cached?.data) : data;
+    if (renderSafely(body, renderer, nextData)) {
+      saveCache(key, nextData);
+      setFoot(footId, true, Date.now());
+    } else if (body.dataset.loaded) {
+      setFoot(footId, false, cached?.ts);
+    }
   } catch (e) {
     if (body.dataset.loaded) {
       setFoot(footId, false, cached?.ts);
@@ -73,6 +110,8 @@ async function runWidget({ key, ttlMs, bodyId, footId, fetcher, renderer }) {
       body.innerHTML = '<span class="t-err">-- DATA UNAVAILABLE --</span>';
       setFoot(footId, false, Date.now());
     }
+  } finally {
+    body.dataset.fetching = '0';
   }
 }
 
@@ -275,8 +314,8 @@ function renderClock() {
 
 // --- Init ---
 const WIDGETS = [
-  { key: 'rr:crypto2', ttlMs: 60_000,      bodyId: 'crypto-body', footId: 'crypto-foot', fetcher: fetchCrypto, renderer: renderCryptoBody, intervalMs: 60_000 },
-  { key: 'rr:stocks2', ttlMs: 60_000,      bodyId: 'stocks-body', footId: 'stocks-foot', fetcher: fetchStocks, renderer: renderStocksBody, intervalMs: 60_000 },
+  { key: 'rr:crypto2', ttlMs: 60_000,      bodyId: 'crypto-body', footId: 'crypto-foot', fetcher: fetchCrypto, renderer: renderCryptoBody, mergeData: mergeObjectData, intervalMs: 60_000 },
+  { key: 'rr:stocks2', ttlMs: 60_000,      bodyId: 'stocks-body', footId: 'stocks-foot', fetcher: fetchStocks, renderer: renderStocksBody, mergeData: mergeRowsByKey('sym', ['price', 'chg']), intervalMs: 60_000 },
   { key: 'rr:fng2',    ttlMs: 5 * 60_000,  bodyId: 'fg-body',     footId: 'fg-foot',     fetcher: fetchFG,     renderer: renderFGBody,     intervalMs: 5 * 60_000 },
   { key: 'rr:global2', ttlMs: 5 * 60_000,  bodyId: 'market-body', footId: 'market-foot', fetcher: fetchMarket, renderer: renderMarketBody, intervalMs: 5 * 60_000 },
   { key: 'rr:news5',   ttlMs: 30 * 60_000, bodyId: 'news-body',   footId: 'news-foot',   fetcher: fetchNews,   renderer: renderNewsBody,   intervalMs: 30 * 60_000 },

@@ -6,7 +6,7 @@
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5691945685029042" crossorigin="anonymous"></script>
   <title>Rich Retards — Scam Alerts, Financial Fails & Money Lessons | Meme Finance</title>
   <meta name="description" content="Scam alerts, financial fails, and brutally honest money lessons. Rich Retards breaks down the worst financial decisions so you don't repeat them. Free weekly newsletter." />
-  <meta name="keywords" content="scam alerts, financial scams, bad financial decisions, money mistakes, crypto scams, contract red flags, meme finance, investment fails, financial literacy, money lessons, wallstreetbets, degen finance, fraud alerts, hidden fees, predatory contracts" />
+  <meta name="keywords" content="scam alerts, financial scams, bad financial decisions, money mistakes, crypto scams, contract red flags, meme finance, investment fails, financial literacy, money lessons, wallstreetbets, degen finance, fraud alerts, hidden fees, predatory contracts, finance app reviews, robinhood review, acorns review, task scam, crypto recovery scam" />
   <link rel="canonical" href="https://richretards.com/" />
 
   <!-- Open Graph -->
@@ -338,6 +338,7 @@
       max-width: 1400px;
       margin: 0 auto;
     }
+    .main-table > * { min-width: 0; }
 
     /* SIDEBAR */
     .sidebar {
@@ -414,7 +415,7 @@
     /* CONTENT CARDS */
     .post-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
       gap: 16px;
       margin-bottom: 20px;
     }
@@ -703,12 +704,14 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 8px;
+      min-width: 0;
     }
     .t-panel {
       background: #0d0d0d;
       border: 1px solid #1f1f1f;
       padding: 8px 10px 6px;
       min-height: 140px;
+      min-width: 0;
       display: flex;
       flex-direction: column;
     }
@@ -723,6 +726,7 @@
     }
     .t-panel-body {
       flex: 1;
+      min-width: 0;
       font-size: 1rem;
       line-height: 1.35;
       color: #e0e0e0;
@@ -735,8 +739,10 @@
       letter-spacing: 1px;
     }
 
-    .t-row { display: flex; justify-content: space-between; padding: 1px 0; }
-    .t-row .sym { color: #ccc; }
+    .t-row { display: flex; justify-content: space-between; gap: 8px; min-width: 0; padding: 1px 0; }
+    .t-row > span { min-width: 0; }
+    .t-row > span:last-child { overflow: hidden; text-align: right; text-overflow: ellipsis; white-space: nowrap; }
+    .t-row .sym { color: #ccc; flex: 0 0 auto; }
     .t-pos { color: #00d084; }
     .t-neg { color: #ff3b3b; }
     .t-muted { color: #666; }
@@ -792,7 +798,8 @@
       .newsletter-box { padding: 24px 16px; }
       .newsletter-box h2 { font-size: 1.8rem; }
       .ad-banner { font-size: 1rem; padding: 10px 12px; }
-      .post-grid { grid-template-columns: 1fr; }
+      .post-grid { gap: 12px; }
+      .post-card { padding: 14px; }
       .t-ref { gap: 8px; }
       .t-ref > span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
       .t-ref .bonus { flex-shrink: 0; white-space: nowrap; }
@@ -1037,19 +1044,21 @@
       if(!Array.isArray(j?.values)||j.values.length<1000) throw new Error('blockchain.info error');
       return j.values.filter(d=>d.y>0).map(d=>({t:d.x*1000,v:d.y}));
     }
-    let prices=[],cachedHist=null,live=false;
+    let prices=[],cachedHist=null,live=false,cacheStale=false;
     try{cachedHist=JSON.parse(localStorage.getItem(HK));}catch(e){}
-    if(cachedHist?.data?.length&&Date.now()-cachedHist.ts<6*3600*1000){
-      prices=cachedHist.data;live=true;
-    }else{
-      try{
-        prices=await fetchHistory();
+    if(cachedHist?.data?.length){
+      prices=cachedHist.data;
+      cacheStale=Date.now()-cachedHist.ts>=6*3600*1000;
+    }
+    if(!prices.length||cacheStale){
+      const refreshHistory=fetchHistory().then(fresh=>{
         live=true;
-        try{localStorage.setItem(HK,JSON.stringify({ts:Date.now(),data:prices}));}catch(e){}
-      }catch(e){
+        try{localStorage.setItem(HK,JSON.stringify({ts:Date.now(),data:fresh}));}catch(e){}
+        if(!prices.length)prices=fresh;
+      }).catch(e=>{
         console.error('Pi Cycle fetch failed:',e);
-        if(cachedHist?.data?.length)prices=cachedHist.data;
-      }
+      });
+      if(!prices.length)await refreshHistory;
     }
     // blockchain.info lags a few days; top off with live spot price
     try{
@@ -1175,6 +1184,7 @@
       <h3>🔥 Navigation</h3>
       <a href="/" class="sidebar-link">🏠 Home</a>
       <a href="/pi-cycle/" class="sidebar-link">📈 Bitcoin Top Signal</a>
+      <a href="/reviews/" class="sidebar-link">⭐ Honest Reviews</a>
       <a href="/scams/discord-guaranteed-returns/" class="sidebar-link">💀 Scam Alerts</a>
       <a href="/fails/nft-rock-loan/" class="sidebar-link">📉 Financial Fails</a>
       <a href="/wisdom/5-contract-clauses/" class="sidebar-link">🧠 Actual Wisdom</a>
@@ -1261,6 +1271,36 @@
       <!-- BREAKING / LATEST ARTICLES — auto-articles get inserted here -->
       <h2 class="section-header" id="latest" style="background:linear-gradient(90deg,#ff0000,#ff4400);animation:adFlash 1.5s ease-in-out infinite alternate;">🔴 BREAKING — LATEST ARTICLES 🔴</h2>
             <div class="post-grid" id="latest-articles">
+        <div class="post-card" style="border-color:#00ff00;box-shadow:0 0 15px rgba(0,255,0,0.3);">
+          <span class="tag" style="background:#00aa00;color:#fff;animation:blink 1s infinite;">⭐ REVIEW</span>
+          <h3>Fineprint Review: Can AI Actually Read a Contract for You?</h3>
+          <p>We tested the AI contract scanner that flags auto renewals, hidden fees, and arbitration traps in seconds. Honest verdict: 4.6/5. What it catches and what it misses.</p>
+          <a href="/reviews/fineprint-review/" class="read-more">&gt;&gt;&gt; READ MORE &lt;&lt;&lt;</a>
+        </div>
+        <div class="post-card" style="border-color:#00ff00;box-shadow:0 0 15px rgba(0,255,0,0.3);">
+          <span class="tag" style="background:#00aa00;color:#fff;animation:blink 1s infinite;">⭐ REVIEW</span>
+          <h3>Robinhood Review 2026: Is It Safe, and Who Really Pays?</h3>
+          <p>If the app is free, you are the product. How payment for order flow works, the real risks of the gamified design, and who should actually use it. Verdict: 3.5/5.</p>
+          <a href="/reviews/robinhood-review/" class="read-more">&gt;&gt;&gt; READ MORE &lt;&lt;&lt;</a>
+        </div>
+        <div class="post-card" style="border-color:#00ff00;">
+          <span class="tag" style="background:#00aa00;color:#fff;">⭐ REVIEW</span>
+          <h3>Acorns Review 2026: Do the Fees Quietly Eat Your Round-Ups?</h3>
+          <p>The spare change app charges a flat monthly fee. On a tiny balance that can be a 36% drag. We run the real math on whether it is worth it. Verdict: 3.0/5.</p>
+          <a href="/reviews/acorns-review/" class="read-more">&gt;&gt;&gt; READ MORE &lt;&lt;&lt;</a>
+        </div>
+        <div class="post-card" style="border-color:#ff0000;box-shadow:0 0 15px rgba(255,0,0,0.3);">
+          <span class="tag tag-scam" style="background:#ff0000;animation:blink 1s infinite;">🔴 NEW</span>
+          <h3>The Task Scam: "Get Paid to Like Videos" Is Stealing Billions</h3>
+          <p>The fastest growing job scam of 2026. It pays you a little to build trust, then makes you deposit your own money to unlock bigger tasks. The deposit never comes back.</p>
+          <a href="/scams/task-scam/" class="read-more">&gt;&gt;&gt; READ MORE &lt;&lt;&lt;</a>
+        </div>
+        <div class="post-card" style="border-color:#ff0000;box-shadow:0 0 15px rgba(255,0,0,0.3);">
+          <span class="tag tag-scam" style="background:#ff0000;animation:blink 1s infinite;">🔴 NEW</span>
+          <h3>Crypto Recovery Scams: The Con That Hunts Victims Twice</h3>
+          <p>Lost money to a scam? Beware the recovery service that slides into your messages promising to get it back for a fee. It is the same scammers coming for round two.</p>
+          <a href="/scams/crypto-recovery-scam/" class="read-more">&gt;&gt;&gt; READ MORE &lt;&lt;&lt;</a>
+        </div>
         <div class="post-card" style="border-color:#ff0000;box-shadow:0 0 15px rgba(255,0,0,0.3);">
           <span class="tag tag-scam" style="background:#ff0000;animation:blink 1s infinite;">🔴 NEW</span>
           <h3>The AI Trading Bot Scam: How "30% a Month" Steals Billions</h3>
